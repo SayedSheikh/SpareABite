@@ -84,7 +84,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="sticky w-full top-0 z-100 backdrop-blur-md shadow-sm shadow-primary mb-[40px]">
+    <div className="sticky w-full top-0 z-100 backdrop-blur-md shadow-sm shadow-primary">
       <div className="navbar w-11/12  max-w-[1400px] mx-auto font-inter px-0">
         <div className="navbar-start">
           <div className="dropdown">
@@ -141,10 +141,14 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           <div className="flex gap-1">
-            <a className="btn btn-primary w-[60px] sm:w-fit">LogIn</a>
-            <a className="btn btn-outline btn-secondary w-[60px] sm:w-fit">
+            <Link to="/login" className="btn btn-primary w-[60px] sm:w-fit">
+              LogIn
+            </Link>
+            <Link
+              to="/signup"
+              className="btn btn-outline btn-secondary w-[60px] sm:w-fit">
               SignUp
-            </a>
+            </Link>
 
             <ThemeControl
               handleTheme={handleTheme}

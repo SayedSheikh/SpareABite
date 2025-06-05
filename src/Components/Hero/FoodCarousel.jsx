@@ -159,7 +159,7 @@ const FoodCarousel = () => {
             onClick={() => setCurrentImage(index)}
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.95 }}
-            className={`w-2 h-2 rounded-full transition-all duration-300 ${
+            className={`w-2 h-2 rounded-full transition-all duration-300 cursor-pointer ${
               index === currentImage
                 ? "bg-blue-500 scale-125"
                 : "bg-slate-300 hover:bg-blue-300"
