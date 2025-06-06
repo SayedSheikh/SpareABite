@@ -1,18 +1,21 @@
 import React, { useState } from "react";
 import Lottie from "lottie-react";
 import SignUpLottie from "./../../../src/Lotties/signup.json";
-import { Link } from "react-router";
+import { Link, useNavigate } from "react-router";
 import toast from "react-hot-toast";
+import useAuth from "../../Hooks/useAuth";
 
 const Signup = () => {
+  const { updateUser, signUp, googleSignIn, githubSignIn } = useAuth();
   const [error, setError] = useState("");
+  const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
     const form = e.target;
     const formData = new FormData(form);
     const values = Object.fromEntries(formData.entries());
-    const { password } = values;
+    const { password, email, name, url } = values;
 
     if (!/[A-Z]/.test(password)) {
       setError("Password must have one Upprcase letter!!");
@@ -28,7 +31,39 @@ const Signup = () => {
       return;
     }
 
+    const updatedObj = {
+      displayName: name,
+      photoURL: url,
+    };
+
+    signUp(email, password)
+      .then(() => {
+        updateUser(updatedObj)
+          .then(() => {
+            toast.success("SignUp Successful !!");
+            navigate("/");
+          })
+          .catch((err) => console.log(err));
+      })
+      .catch((err) => console.log(err));
+
     // console.log(values);
+  };
+
+  const handleGoogle = () => {
+    googleSignIn()
+      .then(() => {
+        toast.success("SignUp Successful!!");
+        navigate("/");
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleGithub = () => {
+    githubSignIn()
+      .then(() => {
+        toast.success("SignUp Successful!!");
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div>
@@ -52,7 +87,7 @@ const Signup = () => {
               <input
                 type="text"
                 className="input w-full"
-                placeholder="Phot url"
+                placeholder="Photo url"
                 name="url"
                 required
               />
@@ -90,7 +125,9 @@ const Signup = () => {
               </div>
             </form>
             <div className="divider my-0">OR</div>
-            <button className=" btn bg-white text-black border-[#e5e5e5]">
+            <button
+              onClick={handleGoogle}
+              className=" btn bg-white text-black border-[#e5e5e5]">
               <svg
                 aria-label="Google logo"
                 width="16"
@@ -115,7 +152,9 @@ const Signup = () => {
               </svg>
               SignUp With Google
             </button>
-            <button className="btn bg-black text-white border-black">
+            <button
+              onClick={handleGithub}
+              className="btn bg-black text-white border-black">
               <svg
                 aria-label="GitHub logo"
                 width="16"

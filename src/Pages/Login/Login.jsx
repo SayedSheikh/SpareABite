@@ -1,17 +1,49 @@
 import React, { useState } from "react";
-import { Link } from "react-router";
+import { Link, useLocation, useNavigate } from "react-router";
 import Lottie from "lottie-react";
 import LoginLottie from "./../../../src/Lotties/loginLottie2.json";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Login = () => {
-  const [emailPass, setEmailPass] = useState(false);
+  const { logIn, googleSignIn, githubSignIn } = useAuth();
   const [error, setError] = useState("");
+  const [emailPass, setEmailPass] = useState(false);
+
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state || "/";
+
+  const handleGoogle = () => {
+    googleSignIn()
+      .then(() => {
+        toast.success("LogIn Successful!!");
+        navigate(from);
+      })
+      .catch((err) => console.log(err));
+  };
+  const handleGithub = () => {
+    githubSignIn()
+      .then(() => {
+        toast.success("LogIn Successful!!");
+        navigate(from);
+      })
+      .catch((err) => console.log(err));
+  };
 
   const handleSubmit = (e) => {
     e.preventDefault();
     setError("");
     const email = e.target.email.value;
     const password = e.target.password.value;
+
+    logIn(email, password)
+      .then(() => {
+        toast.success("LogIn Successful!!");
+        navigate(from);
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div>
@@ -61,7 +93,9 @@ const Login = () => {
               Email/Password
             </button>
             <div className="divider my-0">OR</div>
-            <button className=" btn bg-white text-black border-[#e5e5e5]">
+            <button
+              onClick={handleGoogle}
+              className=" btn bg-white text-black border-[#e5e5e5]">
               <svg
                 aria-label="Google logo"
                 width="16"
@@ -86,7 +120,9 @@ const Login = () => {
               </svg>
               Login with Google
             </button>
-            <button className="btn bg-black text-white border-black">
+            <button
+              onClick={handleGithub}
+              className="btn bg-black text-white border-black">
               <svg
                 aria-label="GitHub logo"
                 width="16"

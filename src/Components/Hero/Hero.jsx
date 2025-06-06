@@ -9,7 +9,6 @@ const Hero = () => {
 
   const { theme } = use(ThemeContext);
 
-  console.log(theme);
   return (
     <section className=" w-11/12  max-w-[1400px] mx-auto mt-10 font-inter">
       <div className="flex flex-col-reverse lg:flex-row items-center justify-center gap-5 min-h-[500px]">
