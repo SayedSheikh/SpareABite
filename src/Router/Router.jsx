@@ -5,6 +5,9 @@ import AddFood from "../Pages/AddFood/AddFood";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Signup/Signup";
 import AvailableFood from "../Pages/AvailableFood/AvailableFood";
+import FoodShareForm from "../Pages/FoodShareForm/FoodShareForm";
+import PrivateRoute from "../Shared/PrivateRoute";
+import Details from "../Pages/Details/Details";
 
 export const router = createBrowserRouter([
   {
@@ -17,11 +20,24 @@ export const router = createBrowserRouter([
       },
       {
         path: "/addfood",
-        Component: AddFood,
+        element: (
+          <PrivateRoute>
+            <FoodShareForm />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/availableFood",
         Component: AvailableFood,
+      },
+
+      {
+        path: "/food/:id",
+        element: (
+          <PrivateRoute>
+            <Details />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/manageFood",

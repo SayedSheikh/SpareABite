@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router";
 
 const food = {
   foodName: "Vegetable Biryani",
@@ -7,7 +8,8 @@ const food = {
   pickupLocation: "123 Main Street",
   expiredAt: "2025-06-07 5:00 PM",
   notes: "Please bring a container.",
-  donorImageURL: "https://example.com/donor.jpg",
+  donorImageURL:
+    "https://lh3.googleusercontent.com/a/ACg8ocL8zHgZYRF9XUyjxK8PfOBh1JI41Qu5kCwtuECTQoJyiI5LXw=s96-c",
   donorName: "Md Sayed Sheikh",
   donorEmail: "sayed@example.com",
   status: "Available",
@@ -37,7 +39,7 @@ const FoodCard = () => {
         />
         <span
           className={`absolute top-2 right-2 px-3 py-1 text-xs font-semibold rounded-[6px] shadow ${
-            food.status === "available"
+            food.status === "Available"
               ? "bg-[#9bffb36f] text-white border  border-green-500"
               : "bg-[#ffb49ba0] text-white border  border-red-500"
           }`}>
@@ -86,7 +88,9 @@ const FoodCard = () => {
             <span class="relative">Button Text</span>
           </button> */}
 
-          <button className="btn btn-info w-full">View Details</button>
+          <Link to={`/food/1234`} className="btn btn-info w-full">
+            View Details
+          </Link>
 
           {/* <button
             href="#_"

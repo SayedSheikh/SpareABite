@@ -22,7 +22,7 @@ const AvailableFood = () => {
         <div className="hero-content text-center">
           <div className="max-w-[700px]">
             <h1 className="text-5xl font-bold">All Availabe Foods</h1>
-            <p className="py-4">
+            <p className="py-4 font-space">
               Explore all the available meals ready to be shared. Find something
               tasty and help reduce food waste at the same time.
             </p>
@@ -59,17 +59,16 @@ const AvailableFood = () => {
                 />
               </label>
 
-              <div className="flex gap-1 w-full sm:w-fit">
+              <div className="flex gap-1 w-full sm:w-fit ">
                 {/* Sort Dropdown */}
                 <select
                   value={searchData.sort}
                   onChange={handleData}
                   name="sort"
-                  className="select select-bordered max-w-[100px] flex-1 sm:flex-none focus-within:outline-0">
+                  className="select select-bordered max-w-[100px] flex-1 sm:flex-none focus-within:outline-0 cursor-pointer">
                   <option disabled>Expire</option>
-                  <option>Any</option>
-                  <option>Asc</option>
-                  <option>Desc</option>
+                  <option className="cursor-pointer">Asc</option>
+                  <option className="cursor-pointer">Desc</option>
                 </select>
 
                 {/* Search Button */}
@@ -84,7 +83,7 @@ const AvailableFood = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-[1400px] mx-auto my-20 gap-5 w-11/12">
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-[1400px] mx-auto py-20 gap-5 w-11/12">
         {Array.from({ length: 10 }).map((_, i) => (
           <FoodCard key={i}></FoodCard>
         ))}
