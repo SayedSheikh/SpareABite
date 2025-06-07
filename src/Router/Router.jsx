@@ -4,6 +4,7 @@ import Home from "../Pages/Home/Home";
 import AddFood from "../Pages/AddFood/AddFood";
 import Login from "../Pages/Login/Login";
 import Signup from "../Pages/Signup/Signup";
+import AvailableFood from "../Pages/AvailableFood/AvailableFood";
 
 export const router = createBrowserRouter([
   {
@@ -20,7 +21,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/availableFood",
-        Component: AddFood,
+        Component: AvailableFood,
       },
       {
         path: "/manageFood",

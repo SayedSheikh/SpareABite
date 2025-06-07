@@ -27,7 +27,7 @@ const FoodCard = () => {
   };
 
   return (
-    <div className="w-[300px] bg-white rounded-[10px] overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-info">
+    <div className=" bg-white rounded-[10px] overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-info">
       {/* Image + Status Badge */}
       <div className="relative">
         <img

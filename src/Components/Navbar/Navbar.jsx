@@ -2,12 +2,16 @@ import React, { use, useEffect } from "react";
 import { Link, NavLink } from "react-router";
 import ThemeControl from "./ThemeControl";
 import { ThemeContext } from "../../Contexts/ThemeContext";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 const Navbar = () => {
   // const [theme, setTheme] = useState(defaultTheme);
-
   const { theme, setTheme } = use(ThemeContext);
   document.querySelector("html").setAttribute("data-theme", theme);
+
+  const { user, logout } = useAuth();
+  console.log(user);
 
   useEffect(() => {
     document.querySelector("html").setAttribute("data-theme", theme);
@@ -21,6 +25,16 @@ const Navbar = () => {
       setTheme("light");
       localStorage.setItem("theme", "light");
     }
+  };
+
+  const handleLogout = () => {
+    logout()
+      .then(() => {
+        toast.success("Logout Successful !!");
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   const links = (
@@ -141,14 +155,33 @@ const Navbar = () => {
         </div>
         <div className="navbar-end">
           <div className="flex gap-1">
-            <Link to="/login" className="btn btn-primary w-[60px] sm:w-fit">
-              LogIn
-            </Link>
-            <Link
-              to="/signup"
-              className="btn btn-outline btn-secondary w-[60px] sm:w-fit">
-              SignUp
-            </Link>
+            {user ? (
+              <>
+                <div
+                  data-tip={user?.displayName}
+                  className={`avatar mr-1 mt-1 w-[30px] h-[30px] tooltip tooltip-bottom  cursor-pointer`}>
+                  <div className="ring-primary  w-full   rounded-full ring-2">
+                    <img className="w-full" src={user.photoURL} />
+                  </div>
+                </div>
+                <button
+                  onClick={handleLogout}
+                  className="btn btn-secondary w-[60px] sm:w-fit">
+                  Logout
+                </button>
+              </>
+            ) : (
+              <>
+                <Link to="/login" className="btn btn-primary w-[60px] sm:w-fit">
+                  LogIn
+                </Link>
+                <Link
+                  to="/signup"
+                  className="btn btn-outline btn-secondary w-[60px] sm:w-fit">
+                  SignUp
+                </Link>
+              </>
+            )}
 
             <ThemeControl
               handleTheme={handleTheme}
