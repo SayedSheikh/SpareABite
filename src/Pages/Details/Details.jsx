@@ -13,7 +13,7 @@ const food = {
   donorImageURL:
     "https://lh3.googleusercontent.com/a/ACg8ocL8zHgZYRF9XUyjxK8PfOBh1JI41Qu5kCwtuECTQoJyiI5LXw=s96-c",
   donorName: "Md Sayed Sheikh",
-  donorEmail: "sayed@example.com",
+  donorEmail: "sayedsheikh100@example.com",
   status: "Available",
 };
 
@@ -28,7 +28,7 @@ const Details = () => {
   console.log(dateTime);
 
   return (
-    <div className="max-w-4xl mx-auto my-8 p-6 rounded-xl shadow-sm shadow-primary">
+    <div className="max-w-4xl mx-auto my-8 p-5 px-4 w-11/12 rounded-xl shadow-sm shadow-primary">
       {/* Food Image */}
       <img
         src={food.foodImageURL}

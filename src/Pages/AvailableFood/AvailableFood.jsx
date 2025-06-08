@@ -1,11 +1,29 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import FoodCard from "./../../Components/FoodCard/FoodCard";
+import axios from "axios";
+import Skeleton from "../../Components/Skeleton/Skeleton";
 
 const AvailableFood = () => {
+  const [data, setData] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [noValue, setNoValue] = useState(""); // to set the property if no data matches.
+  // if consider searchData.search then it will update the currently giving no data searched food
+
   const [searchData, setSearchData] = useState({
     search: "",
     sort: "Expire",
   });
+
+  useEffect(() => {
+    setLoading(true);
+    axios
+      .get(`http://localhost:3000/foods`)
+      .then((data) => {
+        setData(data.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const handleData = (e) => {
     const { name, value } = e.target;
@@ -13,8 +31,18 @@ const AvailableFood = () => {
     setSearchData({ ...searchData, [name]: value });
   };
 
-  const handleSearch = () => {
-    console.log(searchData);
+  const handleSearch = (defaultSort = searchData.sort) => {
+    setLoading(true);
+    setNoValue(searchData.search);
+    axios
+      .get(
+        `http://localhost:3000/foods?search=${searchData.search}&sort=${defaultSort}`
+      )
+      .then((food) => {
+        setData(food.data);
+        setLoading(false);
+      })
+      .catch((err) => console.log(err));
   };
   return (
     <div className="bg-base-200 pt-10 min-h-screen">
@@ -63,7 +91,10 @@ const AvailableFood = () => {
                 {/* Sort Dropdown */}
                 <select
                   value={searchData.sort}
-                  onChange={handleData}
+                  onChange={(e) => {
+                    handleData(e);
+                    handleSearch(e.target.value);
+                  }}
                   name="sort"
                   className="select select-bordered max-w-[100px] flex-1 sm:flex-none focus-within:outline-0 cursor-pointer">
                   <option disabled>Expire</option>
@@ -73,7 +104,7 @@ const AvailableFood = () => {
 
                 {/* Search Button */}
                 <button
-                  onClick={handleSearch}
+                  onClick={() => handleSearch()}
                   className="btn btn-info flex-1 sm:flex-none">
                   Search
                 </button>
@@ -84,9 +115,17 @@ const AvailableFood = () => {
       </div>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-[1400px] mx-auto py-20 gap-5 w-11/12">
-        {Array.from({ length: 10 }).map((_, i) => (
-          <FoodCard key={i}></FoodCard>
-        ))}
+        {loading
+          ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
+          : data.map((item) => <FoodCard key={item._id} food={item} />)}
+        {data.length === 0 && noValue && (
+          <p className="sm:col-span-2 md:col-span-3 lg:col-span-4">
+            No food available with name{" "}
+            <span className="text-primary font-normal text-[18px]">
+              {noValue}
+            </span>
+          </p>
+        )}
       </div>
     </div>
   );

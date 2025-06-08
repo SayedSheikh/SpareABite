@@ -1,21 +1,31 @@
-import React from "react";
+import React, { use } from "react";
 import { Link } from "react-router";
+import { ThemeContext } from "../../Contexts/ThemeContext";
+import { format } from "date-fns";
 
-const food = {
-  foodName: "Vegetable Biryani",
-  foodImageURL: "https://i.ibb.co/LhvPV6qg/hero-image-1.jpg",
-  quantity: "3 Plates",
-  pickupLocation: "123 Main Street",
-  expiredAt: "2025-06-07 5:00 PM",
-  notes: "Please bring a container.",
-  donorImageURL:
-    "https://lh3.googleusercontent.com/a/ACg8ocL8zHgZYRF9XUyjxK8PfOBh1JI41Qu5kCwtuECTQoJyiI5LXw=s96-c",
-  donorName: "Md Sayed Sheikh",
-  donorEmail: "sayed@example.com",
-  status: "Available",
-};
+// const food = {
+//   foodName: "Vegetable Biryani",
+//   foodImageURL: "https://i.ibb.co/LhvPV6qg/hero-image-1.jpg",
+//   quantity: "3 Plates",
+//   pickupLocation: "123 Main Street",
+//   expiredAt: "2025-06-07 5:00 PM",
+//   notes: "Please bring a container.",
+//   donorImageURL:
+//     "https://lh3.googleusercontent.com/a/ACg8ocL8zHgZYRF9XUyjxK8PfOBh1JI41Qu5kCwtuECTQoJyiI5LXw=s96-c",
+//   donorName: "Md Sayed Sheikh",
+//   donorEmail: "sayed@example.com",
+//   status: "Available",
+// };
 
-const FoodCard = () => {
+const FoodCard = ({ food }) => {
+  const { theme } = use(ThemeContext);
+
+  const { expiredAt } = food;
+
+  const date = new Date(expiredAt);
+
+  const formattedDate = format(date, "dd-MM-yyyy p");
+
   const handleEdit = () => {
     console.log(`Editing food item: ${food.foodName}`);
   };
@@ -29,7 +39,7 @@ const FoodCard = () => {
   };
 
   return (
-    <div className=" bg-white rounded-[10px] overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 border border-info">
+    <div className=" rounded-[10px] overflow-hidden  hover:shadow-primary shadow-sm transition-all duration-300 border border-info hover:scale-105 flex flex-col">
       {/* Image + Status Badge */}
       <div className="relative">
         <img
@@ -48,23 +58,37 @@ const FoodCard = () => {
       </div>
 
       {/* Food Info */}
-      <div className="p-4 space-y-3">
-        <h3 className="text-xl font-bold text-gray-800">{food.foodName}</h3>
+      <div className="p-4 space-y-3 flex flex-col grow-1 justify-between">
+        <h3
+          className={`text-xl font-bold  ${
+            theme === "light" ? "text-gray-800" : "text-gray-100"
+          }`}>
+          {food.foodName}
+        </h3>
 
         <div className="space-y-1">
-          <div className="text-sm text-gray-600">
+          <div
+            className={`text-sm  ${
+              theme === "light" ? "text-gray-600" : "text-gray-300"
+            }`}>
             <span>
               <strong>Quantity:</strong> {food.quantity}
             </span>
           </div>
 
-          <div className="text-sm text-gray-600">
+          <div
+            className={`text-sm ${
+              theme === "light" ? "text-gray-600" : "text-gray-300"
+            }`}>
             <span>
-              <strong>Expires:</strong> {food.expiredAt}
+              <strong>Expires:</strong> {formattedDate}
             </span>
           </div>
 
-          <div className="text-sm text-gray-600">
+          <div
+            className={`text-sm ${
+              theme === "light" ? "text-gray-600" : "text-gray-300"
+            }`}>
             <span>
               <strong>Pickup:</strong> {food.pickupLocation}
             </span>
@@ -88,10 +112,6 @@ const FoodCard = () => {
             <span class="relative">Button Text</span>
           </button> */}
 
-          <Link to={`/food/1234`} className="btn btn-info w-full">
-            View Details
-          </Link>
-
           {/* <button
             href="#_"
             class="w-full px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm shadow-sm active:shadow-none transition-all">
@@ -109,6 +129,9 @@ const FoodCard = () => {
             Delete
           </button> */}
         </div>
+        <Link to={`/food/1234`} className="btn btn-info w-full">
+          View Details
+        </Link>
       </div>
     </div>
   );
