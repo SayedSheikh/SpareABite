@@ -27,7 +27,7 @@ const Login = () => {
         toast.success("LogIn Successful!!");
         navigate(from);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err));
   };
   const handleGithub = () => {
     githubSignIn()
@@ -35,7 +35,7 @@ const Login = () => {
         toast.success("LogIn Successful!!");
         navigate(from);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err));
   };
 
   const handleSubmit = (e) => {
@@ -49,7 +49,7 @@ const Login = () => {
         toast.success("LogIn Successful!!");
         navigate(from);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err));
   };
   return (
     <div>

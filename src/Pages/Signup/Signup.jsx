@@ -43,9 +43,9 @@ const Signup = () => {
             toast.success("SignUp Successful !!");
             navigate("/");
           })
-          .catch((err) => console.log(err));
+          .catch((err) => toast.error(err));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err));
 
     // console.log(values);
   };
@@ -56,14 +56,14 @@ const Signup = () => {
         toast.success("SignUp Successful!!");
         navigate("/");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err));
   };
   const handleGithub = () => {
     githubSignIn()
       .then(() => {
         toast.success("SignUp Successful!!");
       })
-      .catch((err) => console.log(err));
+      .catch((err) => toast.error(err));
   };
   return (
     <div>

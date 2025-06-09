@@ -5,6 +5,9 @@ import { format } from "date-fns";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { FaEye } from "react-icons/fa";
+import axios from "axios";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import Swal from "sweetalert2";
 
 // const food = {
 //   foodName: "Vegetable Biryani",
@@ -20,8 +23,9 @@ import { FaEye } from "react-icons/fa";
 //   status: "Available",
 // };
 
-const FoodCard = ({ food, myfood }) => {
+const FoodCard = ({ food, myfood, onOpenModal }) => {
   const { theme } = use(ThemeContext);
+  const queryClient = useQueryClient();
 
   const { expiredAt } = food;
 
@@ -29,12 +33,59 @@ const FoodCard = ({ food, myfood }) => {
 
   const formattedDate = format(date, "dd-MM-yyyy p");
 
+  // const deleteFn = () => {
+  //   return axios
+  //     .delete(`http://localhost:3000/food/${food._id}`)
+  //     .then((res) => console.log(res))
+  //     .catch((err) => console.log(err));
+  // };
+
+  const deleteFn = async () => {
+    try {
+      const result = await axios.delete(
+        `http://localhost:3000/food/${food._id}`
+      );
+      return result;
+    } catch (err) {
+      console.log(err);
+      throw err;
+    }
+  };
+
+  const mutation = useMutation({
+    mutationFn: deleteFn, //The function that performs the API request
+    onSuccess: () => {
+      // console.log(res);
+      //This runs after the mutation succeeds
+      queryClient.invalidateQueries({ queryKey: ["foodData"] }); // optional: refetch the todos
+      Swal.fire({
+        title: "Deleted!",
+        text: "Your Shared Food has been deleted.",
+        icon: "success",
+        showConfirmButton: false,
+        timer: 1000,
+      });
+    },
+  });
+
   const handleEdit = () => {
-    console.log(`Editing food item: ${food.foodName}`);
+    onOpenModal(food);
   };
 
   const handleDelete = () => {
-    console.log(`Deleting food item: ${food.foodName}`);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You won't be able to revert this!",
+      icon: "warning",
+      showCancelButton: true,
+      confirmButtonColor: "#3085d6",
+      cancelButtonColor: "#d33",
+      confirmButtonText: "Yes, delete it!",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        mutation.mutate(); // Mutation Triggered
+      }
+    });
   };
 
   const handleView = () => {

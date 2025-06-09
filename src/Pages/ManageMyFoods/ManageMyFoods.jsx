@@ -6,35 +6,61 @@ import Skeleton from "../../Components/Skeleton/Skeleton";
 import { LiaLongArrowAltRightSolid } from "react-icons/lia";
 import Loading from "../../Components/Loading/Loading";
 
+import { useQuery } from "@tanstack/react-query";
+import RequestModal from "../../Shared/RequestModal";
+import EditForm from "../../Shared/EditForm";
+
 const ManageMyFoods = () => {
-  const { user } = useAuth();
-  const [mySharedFoods, setMySharedFoods] = useState([]);
-  const [loading, setLoading] = useState(true);
+  const { user, loading } = useAuth();
+  const [selectedFood, setSelectedFood] = useState(null);
+  // const [mySharedFoods, setMySharedFoods] = useState([]);
+  // const [loading, setLoading] = useState(true);
 
   const [availableFood, setAvailableFood] = useState([]);
   const [requestedFood, setARequestedFood] = useState([]);
   const [deliveredFood, setDeliveredFood] = useState([]);
 
-  useEffect(() => {
-    setLoading(true);
-    axios
-      .get(`http://localhost:3000/myManagedFoods?email=${user?.email}`)
-      .then(({ data }) => {
-        setMySharedFoods(data);
+  // for modal
 
-        setLoading(false);
-      })
-      .catch((err) => console.log(err));
-  }, [user]);
+  const openModal = (newfood) => {
+    setSelectedFood(newfood);
+    document.getElementById("my_modal_3").showModal();
+  };
+
+  const {
+    isPending,
+    error,
+    data: mySharedFoods,
+  } = useQuery({
+    queryKey: ["foodData", user?.email], // user scoped
+    enabled: !!user?.email, // prevent early fetch when user is null
+    queryFn: () =>
+      axios
+        .get(`http://localhost:3000/myManagedFoods?email=${user?.email}`)
+        .then(({ data }) => data),
+  });
+
+  // console.log(data);
+
+  // useEffect(() => {
+  //   setLoading(true);
+  //   axios
+  //     .get(`http://localhost:3000/myManagedFoods?email=${user?.email}`)
+  //     .then(({ data }) => {
+  //       setMySharedFoods(data);
+
+  //       setLoading(false);
+  //     })
+  //     .catch((err) => console.log(err));
+  // }, [user]);
 
   useEffect(() => {
-    setLoading(true);
-    if (mySharedFoods.length === 0) return;
+    if (mySharedFoods?.length === 0) return;
 
     const requested = [];
     const available = [];
     const delivered = [];
-    mySharedFoods.forEach((food) => {
+    mySharedFoods?.forEach((food) => {
       if (food.status === "Available") {
         available.push(food);
       } else if (food.status === "Requested") {
@@ -47,12 +73,17 @@ const ManageMyFoods = () => {
     setAvailableFood(available);
     setARequestedFood(requested);
     setDeliveredFood(delivered);
-
-    setLoading(false);
   }, [mySharedFoods]);
 
-  if (mySharedFoods.length === 0) {
+  if (loading) {
     return <Loading></Loading>;
+  }
+  if (error) {
+    return (
+      <p className="text-xl text-red-400">
+        Something gone wrong !! <br /> try again later !!
+      </p>
+    );
   }
   return (
     <div className="bg-base-200 min-h-screen py-[50px] font-inter">
@@ -64,20 +95,27 @@ const ManageMyFoods = () => {
         <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold">
           <LiaLongArrowAltRightSolid />
           Shared Available Foods
-          <span className="text-info">({availableFood.length} items)</span>
+          <span className="text-info">({availableFood?.length} items)</span>
         </h1>
 
-        {availableFood.length === 0 && (
+        {availableFood.length === 0 && !isPending && (
           <p className="text-[25px] w-full text-center bg-base-300 py-[20px] rounded-[8px] text-space">
             No Available Food
           </p>
         )}
 
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4   gap-5">
-          {loading
+          {isPending
             ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
-            : availableFood.map((item) => {
-                return <FoodCard key={item._id} food={item} myfood={true} />;
+            : availableFood?.map((item) => {
+                return (
+                  <FoodCard
+                    key={item._id}
+                    food={item}
+                    myfood={true}
+                    onOpenModal={openModal}
+                  />
+                );
               })}
 
           {/* {data.length === 0 && noValue && (
@@ -94,17 +132,17 @@ const ManageMyFoods = () => {
         <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold">
           <LiaLongArrowAltRightSolid />
           Shared Requested Foods
-          <span className="text-info">({requestedFood.length} items)</span>
+          <span className="text-info">({requestedFood?.length} items)</span>
         </h1>
-        {requestedFood.length === 0 && (
+        {requestedFood.length === 0 && !isPending && (
           <p className="text-[25px] w-full text-center bg-base-300 py-[20px] rounded-[8px] text-space">
             No Requested Food
           </p>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4   gap-5">
-          {loading
+          {isPending
             ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
-            : requestedFood.map((item) => {
+            : requestedFood?.map((item) => {
                 return <FoodCard key={item._id} food={item} myfood={true} />;
               })}
 
@@ -122,18 +160,18 @@ const ManageMyFoods = () => {
         <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold">
           <LiaLongArrowAltRightSolid />
           Shared Delivered Foods
-          <span className="text-info">({deliveredFood.length} items)</span>
+          <span className="text-info">({deliveredFood?.length} items)</span>
         </h1>
 
-        {deliveredFood.length === 0 && (
+        {deliveredFood.length === 0 && !isPending && (
           <p className="text-[25px] w-full text-center bg-base-300 py-[20px] rounded-[8px] text-space">
             No Delivered Food
           </p>
         )}
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4   gap-5">
-          {loading
+          {isPending
             ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
-            : deliveredFood.map((item) => {
+            : deliveredFood?.map((item) => {
                 return <FoodCard key={item._id} food={item} myfood={true} />;
               })}
 
@@ -147,6 +185,11 @@ const ManageMyFoods = () => {
         )} */}
         </div>
       </div>
+      <RequestModal>
+        {selectedFood && (
+          <EditForm key={selectedFood._id} food={selectedFood}></EditForm>
+        )}
+      </RequestModal>
     </div>
   );
 };
