@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router";
 import Lottie from "lottie-react";
 import LoginLottie from "./../../../src/Lotties/loginLottie2.json";
@@ -14,6 +14,12 @@ const Login = () => {
   const location = useLocation();
 
   const from = location.state || "/";
+
+  useEffect(() => {
+    if (from !== "/") {
+      toast.success("LogIn First");
+    }
+  }, [from]);
 
   const handleGoogle = () => {
     googleSignIn()

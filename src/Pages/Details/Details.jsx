@@ -1,31 +1,33 @@
 import React from "react";
 import RequestModal from "../../Shared/RequestModal";
 import RequestConfirmation from "../../Shared/RequestConfirmation";
+import { useLoaderData } from "react-router";
+import { format } from "date-fns";
 
-const food = {
-  _id: 123444,
-  foodName: "Vegetable Biryani",
-  foodImageURL: "https://i.ibb.co/LhvPV6qg/hero-image-1.jpg",
-  quantity: "3 Plates",
-  pickupLocation: "123 Main Street",
-  expiredAt: "2025-06-08T03:44",
-  notes: "Please bring a container.",
-  donorImageURL:
-    "https://lh3.googleusercontent.com/a/ACg8ocL8zHgZYRF9XUyjxK8PfOBh1JI41Qu5kCwtuECTQoJyiI5LXw=s96-c",
-  donorName: "Md Sayed Sheikh",
-  donorEmail: "sayedsheikh100@example.com",
-  status: "Available",
-};
+// const food = {
+//   _id: 123444,
+//   foodName: "Vegetable Biryani",
+//   foodImageURL: "https://i.ibb.co/LhvPV6qg/hero-image-1.jpg",
+//   quantity: "3 Plates",
+//   pickupLocation: "123 Main Street",
+//   expiredAt: "2025-06-08T03:44",
+//   notes: "Please bring a container.",
+//   donorImageURL:
+//     "https://lh3.googleusercontent.com/a/ACg8ocL8zHgZYRF9XUyjxK8PfOBh1JI41Qu5kCwtuECTQoJyiI5LXw=s96-c",
+//   donorName: "Md Sayed Sheikh",
+//   donorEmail: "sayedsheikh100@example.com",
+//   status: "Available",
+// };
 
 const Details = () => {
+  const { data: food } = useLoaderData();
   const handleRequest = () => {
     // alert("Request sent for this food item.");
     // You can replace this with real request logic
     document.getElementById("my_modal_3").showModal();
   };
-  const dateTime = new Date(food.expiredAt);
 
-  console.log(dateTime);
+  const formattedExpireDate = format(new Date(food.expiredAt), "dd-MM-yyyy p");
 
   return (
     <div className="max-w-4xl mx-auto my-8 p-5 px-4 w-11/12 rounded-xl shadow-sm shadow-primary">
@@ -49,7 +51,8 @@ const Details = () => {
             {food.pickupLocation}
           </p>
           <p>
-            <span className="font-semibold">Expires At:</span> {food.expiredAt}
+            <span className="font-semibold">Expires At:</span>{" "}
+            {formattedExpireDate}
           </p>
           <p>
             <span className="font-semibold">Notes:</span> {food.notes}
@@ -65,7 +68,7 @@ const Details = () => {
           />
           <div>
             <p className="font-semibold">{food.donorName}</p>
-            <p className="text-sm text-gray-600">{food.donorEmail}</p>
+            <p className="text-sm text-gray-400">{food.donorEmail}</p>
           </div>
         </div>
       </div>

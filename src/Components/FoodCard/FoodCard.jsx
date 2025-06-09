@@ -2,6 +2,9 @@ import React, { use } from "react";
 import { Link } from "react-router";
 import { ThemeContext } from "../../Contexts/ThemeContext";
 import { format } from "date-fns";
+import { BiSolidEditAlt } from "react-icons/bi";
+import { MdDelete } from "react-icons/md";
+import { FaEye } from "react-icons/fa";
 
 // const food = {
 //   foodName: "Vegetable Biryani",
@@ -17,7 +20,7 @@ import { format } from "date-fns";
 //   status: "Available",
 // };
 
-const FoodCard = ({ food }) => {
+const FoodCard = ({ food, myfood }) => {
   const { theme } = use(ThemeContext);
 
   const { expiredAt } = food;
@@ -96,42 +99,29 @@ const FoodCard = ({ food }) => {
         </div>
 
         {/* Action Buttons */}
-        <div className="flex space-x-2 pt-2">
-          {/* <button
-            onClick={handleView}
-            className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-2 px-4 rounded-lg transition-colors">
-            View
-          </button> */}
-          {/* <button
-            href="#_"
-            class="px-5 text-center w-full py-2.5 relative rounded group text-white font-medium inline-block cursor-pointer">
-            <span class="absolute top-0 left-0 w-full h-full rounded opacity-50 filter blur-sm bg-gradient-to-br from-purple-600 to-blue-500"></span>
-            <span class="h-full w-full inset-0 absolute mt-0.5 ml-0.5 bg-gradient-to-br filter group-active:opacity-0 rounded opacity-50 from-purple-600 to-blue-500"></span>
-            <span class="absolute inset-0 w-full h-full transition-all duration-200 ease-out rounded shadow-xl bg-gradient-to-br filter group-active:opacity-0  from-purple-600 to-blue-500"></span>
-            <span class="absolute inset-0 w-full h-full transition duration-200 ease-out rounded bg-gradient-to-br to-purple-600 from-blue-500"></span>
-            <span class="relative">Button Text</span>
-          </button> */}
-
-          {/* <button
-            href="#_"
-            class="w-full px-5 py-2.5 font-medium bg-blue-50 hover:bg-blue-100 hover:text-blue-600 text-blue-500 rounded-lg text-sm shadow-sm active:shadow-none transition-all">
-            Button Text
-          </button> */}
-
-          {/* <button
-            onClick={handleEdit}
-            className="flex-1 bg-gray-600 hover:bg-gray-700 text-white py-2 px-4 rounded-lg transition-colors">
-            Edit
-          </button>
-          <button
-            onClick={handleDelete}
-            className="flex-1 bg-red-600 hover:bg-red-700 text-white py-2 px-4 rounded-lg transition-colors">
-            Delete
-          </button> */}
+        <div className="flex space-x-1 pt-2">
+          {myfood ? (
+            <>
+              <Link to={`/food/${food._id}`} className="btn btn-info flex-1">
+                <FaEye className="mx-auto" size={20} />
+              </Link>
+              <button
+                onClick={handleEdit}
+                className="flex-1 btn btn-neutral text-white py-2 px-4 rounded-sm transition-colors opacity-80">
+                <BiSolidEditAlt className="mx-auto" size={25} />
+              </button>
+              <button
+                onClick={handleDelete}
+                className="flex-1 btn btn-error text-white py-2 px-4 rounded-sm transition-colors">
+                <MdDelete className="mx-auto" size={25} />
+              </button>
+            </>
+          ) : (
+            <Link to={`/food/${food._id}`} className="btn btn-info flex-1">
+              View Details
+            </Link>
+          )}
         </div>
-        <Link to={`/food/1234`} className="btn btn-info w-full">
-          View Details
-        </Link>
       </div>
     </div>
   );

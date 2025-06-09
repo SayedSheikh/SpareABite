@@ -8,6 +8,9 @@ import AvailableFood from "../Pages/AvailableFood/AvailableFood";
 import FoodShareForm from "../Pages/FoodShareForm/FoodShareForm";
 import PrivateRoute from "../Shared/PrivateRoute";
 import Details from "../Pages/Details/Details";
+import axios from "axios";
+import Loading2 from "../Components/Loading/Loading2";
+import ManageMyFoods from "../Pages/ManageMyFoods/ManageMyFoods";
 
 export const router = createBrowserRouter([
   {
@@ -33,15 +36,22 @@ export const router = createBrowserRouter([
 
       {
         path: "/food/:id",
+        loader: ({ params }) =>
+          axios.get(`http://localhost:3000/food/${params.id}`),
         element: (
           <PrivateRoute>
             <Details />
           </PrivateRoute>
         ),
+        hydrateFallbackElement: <Loading2></Loading2>,
       },
       {
         path: "/manageFood",
-        Component: AddFood,
+        element: (
+          <PrivateRoute>
+            <ManageMyFoods />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/foodRequest",

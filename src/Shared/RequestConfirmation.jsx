@@ -1,41 +1,29 @@
 import React from "react";
 import useAuth from "../Hooks/useAuth";
-const food = {
-  _id: 123444,
-  foodName: "Vegetable Biryani",
-  foodImageURL: "https://i.ibb.co/LhvPV6qg/hero-image-1.jpg",
-  quantity: "3 Plates",
-  pickupLocation: "123 Main Street",
-  expiredAt: "2025-06-08T03:44",
-  notes: "Please bring a container.",
-  donorImageURL:
-    "https://lh3.googleusercontent.com/a/ACg8ocL8zHgZYRF9XUyjxK8PfOBh1JI41Qu5kCwtuECTQoJyiI5LXw=s96-c",
-  donorName: "Md Sayed Sheikh",
-  donorEmail: "sayed@example.com",
-  status: "Available",
-};
+import { format } from "date-fns";
+
+// const food = {
+//   _id: 123444,
+//   foodName: "Vegetable Biryani",
+//   foodImageURL: "https://i.ibb.co/LhvPV6qg/hero-image-1.jpg",
+//   quantity: "3 Plates",
+//   pickupLocation: "123 Main Street",
+//   expiredAt: "2025-06-08T03:44",
+//   notes: "Please bring a container.",
+//   donorImageURL:
+//     "https://lh3.googleusercontent.com/a/ACg8ocL8zHgZYRF9XUyjxK8PfOBh1JI41Qu5kCwtuECTQoJyiI5LXw=s96-c",
+//   donorName: "Md Sayed Sheikh",
+//   donorEmail: "sayed@example.com",
+//   status: "Available",
+// };
+
 const RequestConfirmation = ({ food }) => {
   const { user } = useAuth();
   const now = new Date();
-  const year = now.getFullYear();
-  const month = String(now.getMonth() + 1).padStart(2, "0");
-  const day = String(now.getDate()).padStart(2, "0");
-  const hours = String(now.getHours()).padStart(2, "0");
-  const minutes = String(now.getMinutes()).padStart(2, "0");
 
-  const dateTimeValue = `${year}-${month}-${day}T${hours}:${minutes}`;
+  const dateTimeValue = format(now, "dd-MM-yyyy p");
 
-  // Expire date
-
-  // const date = new Date(food.expiredAt);
-
-  // const formattedExpireDateTime = `${date.getFullYear()}-${String(
-  //   date.getMonth() + 1
-  // ).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")}T${String(
-  //   date.getHours()
-  // ).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
-
-  // console.log(date);
+  const formattedExpireDate = format(new Date(food.expiredAt), "dd-MM-yyyy p");
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -104,9 +92,9 @@ const RequestConfirmation = ({ food }) => {
       <div className="flex flex-col md:flex-row gap-3">
         {/* Request Date/Time */}
         <div className="flex-1">
-          <label className="label font-medium">Request Date</label>
+          <label className="label font-medium">Request Date & Time</label>
           <input
-            type="datetime-local"
+            type="text"
             name="requestDateTime"
             className="input input-bordered w-full"
             value={dateTimeValue}
@@ -117,10 +105,10 @@ const RequestConfirmation = ({ food }) => {
         <div className="flex-1">
           <label className="label font-medium">Expire Date</label>
           <input
-            type="datetime-local"
+            type="text"
             name="expiredDateTime"
             className="input input-bordered w-full"
-            value={food.expiredAt}
+            value={formattedExpireDate}
             readOnly
           />
         </div>
