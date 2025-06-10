@@ -77,10 +77,8 @@ const EditForm = ({ food }) => {
   return (
     <form
       onSubmit={handleSubmit}
-      className="max-w-3xl mx-auto p-6  shadow-sm shadow-primary rounded-xl space-y-5">
-      <h2 className="text-3xl font-bold text-center text-primary">
-        Share a Meal
-      </h2>
+      className="max-w-3xl mx-auto p-6  shadow-sm shadow-primary rounded-xl space-y-5 max-h-[500px] overflow-y-auto">
+      <h2 className="text-3xl font-bold text-center text-primary">Meal Info</h2>
       {/* Food Name */}
       <div>
         <label className="label font-medium">Food Name</label>
@@ -195,7 +193,7 @@ const EditForm = ({ food }) => {
           type="text"
           name="status"
           className="input input-bordered w-full"
-          value="Available"
+          value={food.status}
           readOnly
         />
       </div>

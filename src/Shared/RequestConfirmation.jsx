@@ -1,6 +1,10 @@
 import React from "react";
 import useAuth from "../Hooks/useAuth";
 import { format } from "date-fns";
+import axios from "axios";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router";
+// import { format } from "date-fns";
 
 // const food = {
 //   _id: 123444,
@@ -19,11 +23,17 @@ import { format } from "date-fns";
 
 const RequestConfirmation = ({ food }) => {
   const { user } = useAuth();
-  const now = new Date();
+  // const now = new Date().toISOString();
+  const now = new Date(Date.now());
+  const navigate = useNavigate();
+
+  const formatReqDate = format(now, "yyyy-MM-dd'T'HH:mm");
 
   const dateTimeValue = format(now, "dd-MM-yyyy p");
 
   const formattedExpireDate = format(new Date(food.expiredAt), "dd-MM-yyyy p");
+  // const formattedExpireDate = food.expiredAt;
+  // console.log(formattedExpireDate);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -31,11 +41,33 @@ const RequestConfirmation = ({ food }) => {
     const requestFoodInfo = {
       foodId: e.target.foodId.value,
       userEmail: user?.email,
-      DonorEmail: food.donorEmail,
-      requestDate: e.target.requestDateTime.value,
-      aditionalNote: e.target.additionalNotes.value,
+      requestDate: formatReqDate,
+      reqAditionalNote: e.target.additionalNotes.value,
     };
     console.log(requestFoodInfo);
+
+    axios
+      .post("http://localhost:3000/foodRequets", requestFoodInfo)
+      .then((res) => {
+        if (res.data.insertedId) {
+          document.getElementById("my_modal_3").close();
+          Swal.fire({
+            icon: "success",
+            title: "Your food has been requested",
+            showConfirmButton: true,
+          }).then(() => {
+            navigate("/availableFood");
+          });
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+        Swal.fire({
+          icon: "error",
+          title: "Something went wrong!",
+          text: "Failed to request the food.",
+        });
+      });
   };
   return (
     <form

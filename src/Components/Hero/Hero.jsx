@@ -40,7 +40,7 @@ const Hero = () => {
               variant="outline"
               size="lg"
               className="btn btn-outline btn-secondary p-6 text-lg font-semibold rounded-[8px] transition-all duration-300">
-              Find Food Near Me
+              Find Food Near You
             </button>
           </div>
         </div>

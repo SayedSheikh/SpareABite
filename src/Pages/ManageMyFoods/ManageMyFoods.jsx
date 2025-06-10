@@ -9,6 +9,8 @@ import Loading from "../../Components/Loading/Loading";
 import { useQuery } from "@tanstack/react-query";
 import RequestModal from "../../Shared/RequestModal";
 import EditForm from "../../Shared/EditForm";
+import InfoModal from "../../Shared/infoModal";
+import InfoModalChildren from "../../Shared/infoModalChildren";
 
 const ManageMyFoods = () => {
   const { user, loading } = useAuth();
@@ -25,6 +27,10 @@ const ManageMyFoods = () => {
   const openModal = (newfood) => {
     setSelectedFood(newfood);
     document.getElementById("my_modal_3").showModal();
+  };
+  const openInfoModal = (newfood) => {
+    setSelectedFood(newfood);
+    document.getElementById("my_modal_2").showModal();
   };
 
   const {
@@ -92,9 +98,11 @@ const ManageMyFoods = () => {
       </div>
 
       <div className="w-11/12 max-w-[1400px] mx-auto py-15">
-        <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold">
-          <LiaLongArrowAltRightSolid />
-          Shared Available Foods
+        <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold flex-wrap">
+          <div className="flex items-center">
+            <LiaLongArrowAltRightSolid className="hidden sm:inline-block" />
+            Shared Available Foods
+          </div>
           <span className="text-info">({availableFood?.length} items)</span>
         </h1>
 
@@ -114,6 +122,7 @@ const ManageMyFoods = () => {
                     food={item}
                     myfood={true}
                     onOpenModal={openModal}
+                    openInfoModal={openInfoModal}
                   />
                 );
               })}
@@ -129,9 +138,11 @@ const ManageMyFoods = () => {
         </div>
       </div>
       <div className="w-11/12 max-w-[1400px] mx-auto py-15">
-        <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold">
-          <LiaLongArrowAltRightSolid />
-          Shared Requested Foods
+        <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold flex-wrap">
+          <div className="flex items-center">
+            <LiaLongArrowAltRightSolid className="hidden sm:inline-block" />
+            Shared Requested Foods
+          </div>
           <span className="text-info">({requestedFood?.length} items)</span>
         </h1>
         {requestedFood.length === 0 && !isPending && (
@@ -143,7 +154,15 @@ const ManageMyFoods = () => {
           {isPending
             ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
             : requestedFood?.map((item) => {
-                return <FoodCard key={item._id} food={item} myfood={true} />;
+                return (
+                  <FoodCard
+                    key={item._id}
+                    food={item}
+                    myfood={true}
+                    onOpenModal={openModal}
+                    openInfoModal={openInfoModal}
+                  />
+                );
               })}
 
           {/* {data.length === 0 && noValue && (
@@ -157,9 +176,11 @@ const ManageMyFoods = () => {
         </div>
       </div>
       <div className="w-11/12 max-w-[1400px] mx-auto py-15">
-        <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold">
-          <LiaLongArrowAltRightSolid />
-          Shared Delivered Foods
+        <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold flex-wrap">
+          <div className="flex items-center">
+            <LiaLongArrowAltRightSolid className="hidden sm:inline-block" />
+            Shared Delivered Foods
+          </div>
           <span className="text-info">({deliveredFood?.length} items)</span>
         </h1>
 
@@ -172,7 +193,15 @@ const ManageMyFoods = () => {
           {isPending
             ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
             : deliveredFood?.map((item) => {
-                return <FoodCard key={item._id} food={item} myfood={true} />;
+                return (
+                  <FoodCard
+                    key={item._id}
+                    food={item}
+                    myfood={true}
+                    onOpenModal={openModal}
+                    openInfoModal={openInfoModal}
+                  />
+                );
               })}
 
           {/* {data.length === 0 && noValue && (
@@ -190,6 +219,14 @@ const ManageMyFoods = () => {
           <EditForm key={selectedFood._id} food={selectedFood}></EditForm>
         )}
       </RequestModal>
+
+      <InfoModal>
+        {selectedFood && (
+          <InfoModalChildren
+            key={selectedFood._id}
+            food={selectedFood}></InfoModalChildren>
+        )}
+      </InfoModal>
     </div>
   );
 };

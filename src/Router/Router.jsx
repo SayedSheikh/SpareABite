@@ -11,6 +11,7 @@ import Details from "../Pages/Details/Details";
 import axios from "axios";
 import Loading2 from "../Components/Loading/Loading2";
 import ManageMyFoods from "../Pages/ManageMyFoods/ManageMyFoods";
+import MyFoodRequests from "../Pages/MyFoodRequests/MyFoodRequests";
 
 export const router = createBrowserRouter([
   {
@@ -55,7 +56,7 @@ export const router = createBrowserRouter([
       },
       {
         path: "/foodRequest",
-        Component: AddFood,
+        Component: MyFoodRequests,
       },
       {
         path: "/login",

@@ -1,6 +1,9 @@
 import React from "react";
 import useAuth from "../../Hooks/useAuth";
 import Loading from "../../Components/Loading/Loading";
+import axios from "axios";
+import Swal from "sweetalert2";
+import toast from "react-hot-toast";
 
 const FoodShareForm = () => {
   const { user } = useAuth();
@@ -11,7 +14,23 @@ const FoodShareForm = () => {
     const form = e.target;
     const formData = new FormData(form);
     const values = Object.fromEntries(formData.entries());
-    console.log(values);
+
+    axios
+      .post(`http://localhost:3000/food`, values)
+      .then((res) => {
+        if (res.data.insertedId) {
+          form.reset();
+          Swal.fire({
+            icon: "success",
+            title: "Your Food has been Shared",
+            showConfirmButton: false,
+            timer: 1000,
+          });
+        }
+      })
+      .catch((err) => {
+        toast.error(err);
+      });
   };
 
   if (!user) return <Loading />;
@@ -41,7 +60,7 @@ const FoodShareForm = () => {
           <label className="label font-medium">Food Image URL</label>
           <input
             type="url"
-            name="foodImage"
+            name="foodImageURL"
             className="input input-bordered w-full"
             placeholder="Ex: https://example.com/image.jpg"
             required
@@ -66,7 +85,7 @@ const FoodShareForm = () => {
             <label className="label font-medium">Expire Date</label>
             <input
               type="datetime-local"
-              name="expiredDateTime"
+              name="expiredAt"
               className="input input-bordered w-full"
               required
             />
@@ -76,7 +95,7 @@ const FoodShareForm = () => {
             <label className="label font-medium">Food Quantity</label>
             <input
               type="number"
-              name="foodQuantity"
+              name="quantity"
               className="input input-bordered w-full"
               placeholder="Ex: 5 plates"
               required
@@ -88,7 +107,7 @@ const FoodShareForm = () => {
         <div>
           <label className="label font-medium">Additional Notes</label>
           <textarea
-            name="additionalNotes"
+            name="notes"
             className="textarea textarea-bordered w-full"
             placeholder="Optional notes (Ex: Slightly spicy, contains nuts, etc.)"
           />
@@ -99,7 +118,7 @@ const FoodShareForm = () => {
           <label className="label font-medium">Donor Image URL</label>
           <input
             type="url"
-            name="donorImage"
+            name="donorImageURL"
             className="input input-bordered w-full"
             value={user?.photoURL}
             readOnly

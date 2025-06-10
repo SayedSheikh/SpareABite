@@ -27,7 +27,7 @@ const Login = () => {
         toast.success("LogIn Successful!!");
         navigate(from);
       })
-      .catch((err) => toast.error(err));
+      .catch((err) => toast.error(err.code));
   };
   const handleGithub = () => {
     githubSignIn()
@@ -35,7 +35,7 @@ const Login = () => {
         toast.success("LogIn Successful!!");
         navigate(from);
       })
-      .catch((err) => toast.error(err));
+      .catch((err) => toast.error(err.code));
   };
 
   const handleSubmit = (e) => {
@@ -49,7 +49,7 @@ const Login = () => {
         toast.success("LogIn Successful!!");
         navigate(from);
       })
-      .catch((err) => toast.error(err));
+      .catch((err) => toast.error(err.code));
   };
   return (
     <div>
@@ -69,6 +69,7 @@ const Login = () => {
                 className="input w-full"
                 placeholder="Email"
                 name="email"
+                required
               />
               <label className="label">Password</label>
               <input
@@ -76,6 +77,7 @@ const Login = () => {
                 className="input w-full"
                 placeholder="Password"
                 name="password"
+                required
               />
               <div>
                 <a className="link link-hover">Forgot password?</a>

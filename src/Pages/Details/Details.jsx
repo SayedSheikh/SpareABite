@@ -3,6 +3,8 @@ import RequestModal from "../../Shared/RequestModal";
 import RequestConfirmation from "../../Shared/RequestConfirmation";
 import { useLoaderData } from "react-router";
 import { format } from "date-fns";
+import useAuth from "../../Hooks/useAuth";
+import toast from "react-hot-toast";
 
 // const food = {
 //   _id: 123444,
@@ -20,10 +22,16 @@ import { format } from "date-fns";
 // };
 
 const Details = () => {
+  const { user } = useAuth();
   const { data: food } = useLoaderData();
   const handleRequest = () => {
     // alert("Request sent for this food item.");
     // You can replace this with real request logic
+
+    if (user.email === food.donorEmail) {
+      toast.error("You cant request\nyour own shared food");
+      return;
+    }
     document.getElementById("my_modal_3").showModal();
   };
 
@@ -39,7 +47,12 @@ const Details = () => {
       />
       {/* Food Info */}
       <h2 className="text-3xl font-bold mb-2">{food.foodName}</h2>
-      <p className="text-base text-green-400  mb-1 w-fit">{food.status}</p>
+      <p
+        className={`text-base  mb-1 w-fit ${
+          food.status === "Available" ? "text-green-400" : "text-orange-400"
+        }`}>
+        {food.status}
+      </p>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
         <div>

@@ -23,7 +23,7 @@ import Swal from "sweetalert2";
 //   status: "Available",
 // };
 
-const FoodCard = ({ food, myfood, onOpenModal }) => {
+const FoodCard = ({ food, myfood, onOpenModal, openInfoModal }) => {
   const { theme } = use(ThemeContext);
   const queryClient = useQueryClient();
 
@@ -89,7 +89,7 @@ const FoodCard = ({ food, myfood, onOpenModal }) => {
   };
 
   const handleView = () => {
-    console.log(`Viewing food item: ${food.foodName}`);
+    openInfoModal(food);
   };
 
   return (
@@ -153,9 +153,9 @@ const FoodCard = ({ food, myfood, onOpenModal }) => {
         <div className="flex space-x-1 pt-2">
           {myfood ? (
             <>
-              <Link to={`/food/${food._id}`} className="btn btn-info flex-1">
+              <button onClick={handleView} className="btn btn-info flex-1">
                 <FaEye className="mx-auto" size={20} />
-              </Link>
+              </button>
               <button
                 onClick={handleEdit}
                 className="flex-1 btn btn-neutral text-white py-2 px-4 rounded-sm transition-colors opacity-80">

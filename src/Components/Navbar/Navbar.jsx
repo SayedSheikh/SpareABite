@@ -91,7 +91,7 @@ const Navbar = () => {
               isActive && "border-b-2 border-b-secondary"
             } rounded-none  px-2 mx-1 pb-0`
           }>
-          My Food Request
+          My Requested Foods
         </NavLink>
       </li>
     </>
