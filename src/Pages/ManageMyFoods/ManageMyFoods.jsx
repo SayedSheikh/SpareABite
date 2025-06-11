@@ -20,7 +20,6 @@ const ManageMyFoods = () => {
 
   const [availableFood, setAvailableFood] = useState([]);
   const [requestedFood, setARequestedFood] = useState([]);
-  const [deliveredFood, setDeliveredFood] = useState([]);
 
   // for modal
 
@@ -65,20 +64,17 @@ const ManageMyFoods = () => {
 
     const requested = [];
     const available = [];
-    const delivered = [];
+
     mySharedFoods?.forEach((food) => {
       if (food.status === "Available") {
         available.push(food);
       } else if (food.status === "Requested") {
         requested.push(food);
-      } else if (food.status === "Delivered") {
-        delivered.push(food);
       }
     });
 
     setAvailableFood(available);
     setARequestedFood(requested);
-    setDeliveredFood(delivered);
   }, [mySharedFoods]);
 
   if (loading) {
@@ -175,45 +171,7 @@ const ManageMyFoods = () => {
         )} */}
         </div>
       </div>
-      <div className="w-11/12 max-w-[1400px] mx-auto py-15">
-        <h1 className="text-[30px] text-secondary mb-3 flex gap-2 items-center font-semibold flex-wrap">
-          <div className="flex items-center">
-            <LiaLongArrowAltRightSolid className="hidden sm:inline-block" />
-            Shared Delivered Foods
-          </div>
-          <span className="text-info">({deliveredFood?.length} items)</span>
-        </h1>
 
-        {deliveredFood.length === 0 && !isPending && (
-          <p className="text-[25px] w-full text-center bg-base-300 py-[20px] rounded-[8px] text-space">
-            No Delivered Food
-          </p>
-        )}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4   gap-5">
-          {isPending
-            ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
-            : deliveredFood?.map((item) => {
-                return (
-                  <FoodCard
-                    key={item._id}
-                    food={item}
-                    myfood={true}
-                    onOpenModal={openModal}
-                    openInfoModal={openInfoModal}
-                  />
-                );
-              })}
-
-          {/* {data.length === 0 && noValue && (
-          <p className="sm:col-span-2 md:col-span-3 lg:col-span-4">
-            No food available with name{" "}
-            <span className="text-primary font-normal text-[18px]">
-              {noValue}
-            </span>
-          </p>
-        )} */}
-        </div>
-      </div>
       <RequestModal>
         {selectedFood && (
           <EditForm key={selectedFood._id} food={selectedFood}></EditForm>

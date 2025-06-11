@@ -2,6 +2,7 @@ import React, { use } from "react";
 import FoodCarousel from "./FoodCarousel";
 import { FaArrowRight } from "react-icons/fa";
 import { ThemeContext } from "../../Contexts/ThemeContext";
+import { Link } from "react-router";
 
 const Hero = () => {
   // const theme = localStorage.getItem("theme") || "light";
@@ -30,18 +31,20 @@ const Hero = () => {
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
-            <button
+            <Link
+              to="/addFood"
               size="lg"
               className="btn btn-primary p-6 text-lg font-semibold rounded-[8px] transition-all duration-300 flex items-center">
               Start Sharing
               <FaArrowRight className="size-5" />
-            </button>
-            <button
+            </Link>
+            <Link
+              to="/availableFood"
               variant="outline"
               size="lg"
               className="btn btn-outline btn-secondary p-6 text-lg font-semibold rounded-[8px] transition-all duration-300">
               Find Food Near You
-            </button>
+            </Link>
           </div>
         </div>
 

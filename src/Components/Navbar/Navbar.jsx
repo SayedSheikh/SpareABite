@@ -11,7 +11,6 @@ const Navbar = () => {
   document.querySelector("html").setAttribute("data-theme", theme);
 
   const { user, logout } = useAuth();
-  console.log(user);
 
   useEffect(() => {
     document.querySelector("html").setAttribute("data-theme", theme);

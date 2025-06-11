@@ -12,11 +12,13 @@ import axios from "axios";
 import Loading2 from "../Components/Loading/Loading2";
 import ManageMyFoods from "../Pages/ManageMyFoods/ManageMyFoods";
 import MyFoodRequests from "../Pages/MyFoodRequests/MyFoodRequests";
+import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: MainLayoute,
+    errorElement: <ErrorPage></ErrorPage>,
     children: [
       {
         index: true,
@@ -56,7 +58,11 @@ export const router = createBrowserRouter([
       },
       {
         path: "/foodRequest",
-        Component: MyFoodRequests,
+        element: (
+          <PrivateRoute>
+            <MyFoodRequests />
+          </PrivateRoute>
+        ),
       },
       {
         path: "/login",
