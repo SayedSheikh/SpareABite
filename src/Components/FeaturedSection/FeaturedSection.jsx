@@ -31,7 +31,7 @@ const FeaturedSection = () => {
   }
   return (
     <div className="max-w-[1400px] mx-auto w-11/12 mb-20">
-      <h1 className="text-center text-3xl md:text-4xl font-semibold font-inter text-secondary my-10">
+      <h1 className="text-center text-3xl md:text-4xl font-semibold font-inter text-primary my-10">
         Featured Shared Foods
       </h1>
 
