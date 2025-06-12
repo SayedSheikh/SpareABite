@@ -1,4 +1,3 @@
-import axios from "axios";
 import React, { useEffect, useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import FoodCard from "../../Components/FoodCard/FoodCard";
@@ -11,6 +10,7 @@ import RequestModal from "../../Shared/RequestModal";
 import EditForm from "../../Shared/EditForm";
 import InfoModal from "../../Shared/infoModal";
 import InfoModalChildren from "../../Shared/infoModalChildren";
+import { manageFoodApi } from "../../Apis/manageFoodApi";
 
 const ManageMyFoods = () => {
   const { user, loading } = useAuth();
@@ -32,6 +32,19 @@ const ManageMyFoods = () => {
     document.getElementById("my_modal_2").showModal();
   };
 
+  // const manageFoodApi = async () => {
+  //   try {
+  //     const res = await axios.get(
+  //       `http://localhost:3000/myManagedFoods?email=${user?.email}`
+  //     );
+
+  //     return res.data;
+  //   } catch (err) {
+  //     console.log(err);
+  //     throw err;
+  //   }
+  // };
+
   const {
     isPending,
     error,
@@ -39,10 +52,7 @@ const ManageMyFoods = () => {
   } = useQuery({
     queryKey: ["foodData", user?.email], // user scoped
     enabled: !!user?.email, // prevent early fetch when user is null
-    queryFn: () =>
-      axios
-        .get(`http://localhost:3000/myManagedFoods?email=${user?.email}`)
-        .then(({ data }) => data),
+    queryFn: () => manageFoodApi(user?.email),
   });
 
   // console.log(data);
@@ -89,6 +99,7 @@ const ManageMyFoods = () => {
   }
   return (
     <div className="bg-base-200 min-h-screen py-[50px] font-inter">
+      <title>SpareABite | MangageFoods</title>
       <div className="text-center w-11/12  max-w-[1400px] mx-auto text-primary">
         <h1 className="text-5xl font-bold">My Shared Foods</h1>
       </div>

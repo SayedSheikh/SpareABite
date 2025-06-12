@@ -20,10 +20,10 @@ import { Link } from "react-router";
 
 const FeaturedCard = ({ food }) => {
   return (
-    <div className="card card-side bg-base-200 shadow-sm shadow-primary h-[200px] group font-inter">
+    <div className="card card-side bg-base-200 border border-primary/30 hover:shadow-lg h-[200px] group font-inter transition-shadow duration-[.3s]">
       <figure className="w-[40%]">
         <img
-          className="object-cover w-full h-full group-hover:scale-110 transition-transform"
+          className="object-cover w-full h-full group-hover:scale-110 transition-transform duration-[.3s]"
           src={food.foodImageURL}
           alt="Food"
         />

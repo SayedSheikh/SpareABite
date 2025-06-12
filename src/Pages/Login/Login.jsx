@@ -53,6 +53,7 @@ const Login = () => {
   };
   return (
     <div>
+      <title>SpareABite | LogIn</title>
       <div className="hero-content flex-col mt-0 lg:flex-row-reverse lg:mt-[50px] mx-auto">
         <div className="text-center lg:text-left">
           <Lottie className="max-w-[400px]" animationData={LoginLottie} />

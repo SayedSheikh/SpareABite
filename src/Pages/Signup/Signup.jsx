@@ -67,6 +67,7 @@ const Signup = () => {
   };
   return (
     <div>
+      <title>SpareABite | SignUp</title>
       <div className="hero-content flex-col mt-0 lg:flex-row-reverse mb-[40px] lg:mt-[10px] mx-auto">
         <div className="text-center lg:text-left">
           <Lottie className="max-w-[500px]" animationData={SignUpLottie} />

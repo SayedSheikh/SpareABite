@@ -37,6 +37,7 @@ const FoodShareForm = () => {
 
   return (
     <div className="font-inter my-10">
+      <title>SpareABite | AddFood</title>
       <form
         onSubmit={handleSubmit}
         className="max-w-3xl mx-auto p-6  shadow-sm shadow-primary rounded-xl space-y-5">

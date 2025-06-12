@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
-import axios from "axios";
-import toast from "react-hot-toast";
+
 import Loading2 from "../../Components/Loading/Loading2";
 import RequestModal from "../../Shared/RequestModal";
 
@@ -10,6 +9,9 @@ import ViewDetails from "../../Shared/ViewDetails";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 import Swal from "sweetalert2";
 import InfoModal from "../../Shared/infoModal";
+import { getReqFoods } from "../../Apis/getReqFoods";
+import { deleteFn } from "../../Apis/deleteFnApi";
+import { editMutationFn } from "../../Apis/editMutationFn";
 
 const MyFoodRequests = () => {
   const queryClient = useQueryClient();
@@ -22,34 +24,10 @@ const MyFoodRequests = () => {
     document.getElementById("my_modal_3").showModal();
   };
 
-  const getReqFoods = async () => {
-    try {
-      const res = await axios.get(
-        `http://localhost:3000/foodRequests?email=${user?.email}`
-      );
-      return res.data;
-    } catch (err) {
-      console.log(err);
-      toast.error("error occured");
-    }
-  };
-
-  const deleteFn = async (id) => {
-    try {
-      const res = await axios.delete(
-        `http://localhost:3000/foodRequests/${id}?email=${user?.email}`
-      );
-      return res.data;
-    } catch (err) {
-      toast.error("Error Occured");
-      throw err;
-    }
-  };
-
   // mutation with tan stack query
-
+  // delete mutation
   const mutation = useMutation({
-    mutationFn: deleteFn,
+    mutationFn: (id) => deleteFn(id, user?.email),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["reqFoodData"] });
       Swal.fire({
@@ -88,7 +66,7 @@ const MyFoodRequests = () => {
   } = useQuery({
     queryKey: ["reqFoodData", user?.email], // user scoped
     enabled: !!user?.email, // prevent early fetch when user is null
-    queryFn: getReqFoods,
+    queryFn: () => getReqFoods(user?.email),
   });
 
   // Handle Edit btn
@@ -104,27 +82,13 @@ const MyFoodRequests = () => {
     const updatedInfo = {
       reqAditionalNote: value,
     };
+    // console.log(updatedInfo);
     editNoteMutation.mutate({ id, updatedInfo });
   };
 
-  const editMutationFn = async ({ id, updatedInfo }) => {
-    // console.log(id, updatedInfo);
-
-    try {
-      const res = await axios.patch(
-        `http://localhost:3000/foodRequests/${id}?email=${user?.email}`,
-        updatedInfo
-      );
-      return res.data;
-    } catch (err) {
-      console.log(err);
-      toast.error("Error Occcured");
-      throw err;
-    }
-  };
-
   const editNoteMutation = useMutation({
-    mutationFn: editMutationFn,
+    mutationFn: ({ id, updatedInfo }) =>
+      editMutationFn(id, updatedInfo, user?.email),
     onSuccess: (res) => {
       document.getElementById("my_modal_2").close();
       if (res.modifiedCount) {
@@ -158,6 +122,7 @@ const MyFoodRequests = () => {
   }
   return (
     <div className="bg-base-200 min-h-screen">
+      <title>SpareABite | MyFoodRequests</title>
       <div className="max-w-[1400px] mx-auto">
         <h1 className="text-center text-3xl font-bold font-inter py-5 text-primary">
           My Requested Foods

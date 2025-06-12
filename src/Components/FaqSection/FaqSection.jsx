@@ -4,7 +4,7 @@ const faqs = [
   {
     question: "How does this food donation platform work?",
     answer:
-      "Our platform connects food donors with recipients. Donors list available food, and those in need can request it. Once approved, they can pick it up from the specified location.",
+      "Our platform connects food donors with recipients. Donors list available food, and those in need can request it.",
   },
   {
     question: "Is it safe to request and consume donated food?",
@@ -43,7 +43,7 @@ const FaqSection = () => {
           {faqs.map((item, i) => (
             <div
               key={i}
-              className="collapse collapse-plus bg-base-100 border border-primary/30">
+              className="collapse collapse-plus bg-base-100 border border-primary/30 font-space">
               <input type="radio" name="my-accordion-3" defaultChecked />
               <div className="collapse-title font-semibold">
                 {item.question}

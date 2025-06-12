@@ -97,7 +97,7 @@ const Navbar = () => {
   );
 
   return (
-    <div className="sticky w-full top-0 z-100 backdrop-blur-md shadow-sm shadow-primary">
+    <div className="sticky w-full top-0 z-100 bg-base-200 shadow-sm shadow-primary">
       <div className="navbar w-11/12  max-w-[1400px] mx-auto font-inter px-0">
         <div className="navbar-start">
           <div className="dropdown">

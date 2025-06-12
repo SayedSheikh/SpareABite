@@ -12,7 +12,7 @@ const OurServicesSection = () => {
         </p>
 
         <div className="grid gap-8 md:grid-cols-3">
-          <div className="bg-base-200 rounded-xl p-6 shadow hover:shadow-lg transition duration-300">
+          <div className="bg-base-200 rounded-xl p-6 shadow hover:shadow-lg transition duration-300 border border-primary/20">
             <div className="mb-4 flex justify-center">
               <FaHandHoldingHeart size={36} className="text-primary" />
             </div>
@@ -23,7 +23,7 @@ const OurServicesSection = () => {
             </p>
           </div>
 
-          <div className="bg-base-200 rounded-xl p-6 shadow hover:shadow-lg transition duration-300">
+          <div className="bg-base-200 rounded-xl p-6 shadow hover:shadow-lg transition duration-300 border border-primary/20">
             <div className="mb-4 flex justify-center">
               <FaRecycle size={36} className="text-primary" />
             </div>
@@ -34,7 +34,7 @@ const OurServicesSection = () => {
             </p>
           </div>
 
-          <div className="bg-base-200 rounded-xl p-6 shadow hover:shadow-lg transition duration-300">
+          <div className="bg-base-200 rounded-xl p-6 shadow hover:shadow-lg transition duration-300 border border-primary/20">
             <div className="mb-4 flex justify-center">
               <FaUsers size={36} className="text-primary" />
             </div>

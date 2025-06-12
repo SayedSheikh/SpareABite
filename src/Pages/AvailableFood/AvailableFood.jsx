@@ -9,6 +9,8 @@ const AvailableFood = () => {
   const [noValue, setNoValue] = useState(""); // to set the property if no data matches.
   // if consider searchData.search then it will update the currently giving no data searched food
 
+  const [toggle, setToggle] = useState(true);
+
   const [searchData, setSearchData] = useState({
     search: "",
     sort: "Expire",
@@ -46,6 +48,7 @@ const AvailableFood = () => {
   };
   return (
     <div className="bg-base-200 pt-10 min-h-screen">
+      <title>SpareABite | AvailableFoods</title>
       <div className="hero  font-inter">
         <div className="hero-content text-center">
           <div className="max-w-[700px]">
@@ -114,18 +117,30 @@ const AvailableFood = () => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 max-w-[1400px] mx-auto py-20 gap-5 w-11/12">
-        {loading
-          ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
-          : data.map((item) => <FoodCard key={item._id} food={item} />)}
-        {data.length === 0 && noValue && (
-          <p className="sm:col-span-2 md:col-span-3 lg:col-span-4">
-            No food available with name{" "}
-            <span className="text-primary font-normal text-[18px]">
-              {noValue}
-            </span>
-          </p>
-        )}
+      <div className="relative max-w-[1000px] mx-auto py-20 w-11/12">
+        <div className="justify-end mb-5 sticky top-16 z-10 py-2 px-1 hidden md:flex">
+          <button
+            onClick={() => setToggle((prev) => !prev)}
+            className=" btn btn-sm sm:btn-md btn-accent shadow-md hover:shadow-lg transition-all duration-300">
+            Change layout
+          </button>
+        </div>
+        <div
+          className={`grid grid-cols-1 sm:grid-cols-2 gap-5 ${
+            toggle ? "md:grid-cols-3" : "md:grid-cols-2"
+          }`}>
+          {loading
+            ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
+            : data.map((item) => <FoodCard key={item._id} food={item} />)}
+          {data.length === 0 && noValue && (
+            <p className="sm:col-span-2 md:col-span-3 lg:col-span-4">
+              No food available with name{" "}
+              <span className="text-primary font-normal text-[18px]">
+                {noValue}
+              </span>
+            </p>
+          )}
+        </div>
       </div>
     </div>
   );

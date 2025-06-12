@@ -7,6 +7,7 @@ import { MdOutlineKeyboardBackspace } from "react-icons/md";
 const ErrorPage = () => {
   return (
     <div className="bg-black h-screen text-white ">
+      <title>SpareABite | 404</title>
       <div className="max-w-[1400px] mx-auto w-11/12">
         <Lottie
           className="max-w-[500px] mx-auto"

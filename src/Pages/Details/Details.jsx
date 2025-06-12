@@ -28,6 +28,7 @@ const Details = () => {
   if (food.length === 0) {
     return (
       <div className="max-w-[1400px] mx-auto py-16 w-11/12">
+        <title>SpareABite | Details</title>
         <div className="bg-base-300 p-8 rounded-xl shadow-md text-center space-y-4 max-w-[700px] mx-auto">
           <h2 className="text-2xl font-semibold text-error">No Food Found</h2>
           <p className="text-sm text-gray-400">
@@ -58,6 +59,7 @@ const Details = () => {
 
   return (
     <div className="max-w-4xl mx-auto my-8 p-5 px-4 w-11/12 rounded-xl shadow-sm shadow-primary">
+      <title>SpareABite | Details</title>
       {/* Food Image */}
       <img
         src={food?.foodImageURL}
