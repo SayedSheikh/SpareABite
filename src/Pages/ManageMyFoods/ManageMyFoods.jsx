@@ -10,13 +10,16 @@ import RequestModal from "../../Shared/RequestModal";
 import EditForm from "../../Shared/EditForm";
 import InfoModal from "../../Shared/infoModal";
 import InfoModalChildren from "../../Shared/infoModalChildren";
-import { manageFoodApi } from "../../Apis/manageFoodApi";
+import useManageFoodApi from "../../Apis/useManageFoodApi";
+// import { manageFoodApi } from "../../Apis/manageFoodApi";
 
 const ManageMyFoods = () => {
   const { user, loading } = useAuth();
   const [selectedFood, setSelectedFood] = useState(null);
   // const [mySharedFoods, setMySharedFoods] = useState([]);
   // const [loading, setLoading] = useState(true);
+
+  const { manageFoodApi } = useManageFoodApi();
 
   const [availableFood, setAvailableFood] = useState([]);
   const [requestedFood, setARequestedFood] = useState([]);
@@ -70,7 +73,7 @@ const ManageMyFoods = () => {
   // }, [user]);
 
   useEffect(() => {
-    if (mySharedFoods?.length === 0) return;
+    // if (mySharedFoods?.length === 0) return;
 
     const requested = [];
     const available = [];
@@ -91,6 +94,7 @@ const ManageMyFoods = () => {
     return <Loading></Loading>;
   }
   if (error) {
+    console.log(error);
     return (
       <p className="text-xl text-red-400">
         Something gone wrong !! <br /> try again later !!

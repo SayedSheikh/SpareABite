@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import useAuth from "../../Hooks/useAuth";
-import axios from "axios";
+// import axios from "axios";
 import Swal from "sweetalert2";
+import useSecureAxios from "../../Hooks/useSecureAxios";
 
 // {
 //     userName: "sayed Sheikh",
@@ -14,6 +15,7 @@ import Swal from "sweetalert2";
 
 const GiveReview = () => {
   const { user } = useAuth();
+  const secureAxios = useSecureAxios();
   const [rating, setRating] = useState(3);
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -29,7 +31,7 @@ const GiveReview = () => {
       comment,
     };
 
-    const res = await axios.post("http://localhost:3000/reviews", info);
+    const res = await secureAxios.post("/reviews", info);
     if (res.data.insertedId) {
       document.getElementById("my_modal_2").close();
       Swal.fire({

@@ -9,11 +9,17 @@ import ViewDetails from "../../Shared/ViewDetails";
 import { MdDeleteForever, MdModeEdit } from "react-icons/md";
 import Swal from "sweetalert2";
 import InfoModal from "../../Shared/infoModal";
-import { getReqFoods } from "../../Apis/getReqFoods";
-import { deleteFn } from "../../Apis/deleteFnApi";
-import { editMutationFn } from "../../Apis/editMutationFn";
+// import { getReqFoods } from "../../Apis/getReqFoods";
+// import { deleteFn } from "../../Apis/deleteFnApi";
+// import { editMutationFn } from "../../Apis/editMutationFn";
+import useGetReqFood from "../../Apis/useGetReqFood";
+import useEditMutationFn from "../../Apis/useEditMutationFn";
+import useDeleteFnApi from "../../Apis/useDeleteFnApi";
 
 const MyFoodRequests = () => {
+  const { getReqFoods } = useGetReqFood();
+  const { editMutationFn } = useEditMutationFn();
+  const { deleteFn } = useDeleteFnApi();
   const queryClient = useQueryClient();
   const { user } = useAuth();
 

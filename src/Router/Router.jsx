@@ -13,6 +13,9 @@ import ManageMyFoods from "../Pages/ManageMyFoods/ManageMyFoods";
 import MyFoodRequests from "../Pages/MyFoodRequests/MyFoodRequests";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import AllReviews from "../Pages/AllReviews/AllReviews";
+// import useFoodDetailsApi from "../Apis/useFoodDetailsApi";
+
+// const axiosSecure = useSecureAxios();
 
 export const router = createBrowserRouter([
   {
@@ -39,8 +42,7 @@ export const router = createBrowserRouter([
 
       {
         path: "/food/:id",
-        loader: ({ params }) =>
-          axios.get(`http://localhost:3000/food/${params.id}`),
+        // loader: ({ params }) => axiosSecure.get(`/food/${params.id}`),
         element: (
           <PrivateRoute>
             <Details />

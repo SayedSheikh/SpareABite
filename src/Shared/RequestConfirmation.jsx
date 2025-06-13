@@ -1,9 +1,9 @@
 import React from "react";
 import useAuth from "../Hooks/useAuth";
 import { format } from "date-fns";
-import axios from "axios";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router";
+import useSecureAxios from "../Hooks/useSecureAxios";
 // import { format } from "date-fns";
 
 // const food = {
@@ -27,6 +27,8 @@ const RequestConfirmation = ({ food }) => {
   const now = new Date(Date.now());
   const navigate = useNavigate();
 
+  const secureAxios = useSecureAxios();
+
   const formatReqDate = format(now, "yyyy-MM-dd'T'HH:mm");
 
   const dateTimeValue = format(now, "dd-MM-yyyy p");
@@ -46,8 +48,8 @@ const RequestConfirmation = ({ food }) => {
     };
     console.log(requestFoodInfo);
 
-    axios
-      .post("http://localhost:3000/foodRequets", requestFoodInfo)
+    secureAxios
+      .post("/foodRequets", requestFoodInfo)
       .then((res) => {
         if (res.data.insertedId) {
           document.getElementById("my_modal_3").close();

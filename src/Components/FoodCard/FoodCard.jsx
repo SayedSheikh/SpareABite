@@ -5,9 +5,10 @@ import { format } from "date-fns";
 import { BiSolidEditAlt } from "react-icons/bi";
 import { MdDelete } from "react-icons/md";
 import { FaEye } from "react-icons/fa";
-import axios from "axios";
+// import axios from "axios";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
+import useSecureAxios from "../../Hooks/useSecureAxios";
 
 // const food = {
 //   foodName: "Vegetable Biryani",
@@ -25,7 +26,9 @@ import Swal from "sweetalert2";
 
 const FoodCard = ({ food, myfood, onOpenModal, openInfoModal }) => {
   const { theme } = use(ThemeContext);
+
   const queryClient = useQueryClient();
+  const secureAxios = useSecureAxios();
 
   const { expiredAt } = food;
 
@@ -42,9 +45,7 @@ const FoodCard = ({ food, myfood, onOpenModal, openInfoModal }) => {
 
   const deleteFn = async () => {
     try {
-      const result = await axios.delete(
-        `http://localhost:3000/food/${food._id}`
-      );
+      const result = await secureAxios.delete(`/food/${food._id}`);
       return result;
     } catch (err) {
       console.log(err);
@@ -56,8 +57,8 @@ const FoodCard = ({ food, myfood, onOpenModal, openInfoModal }) => {
     mutationFn: deleteFn, //The function that performs the API request
     onSuccess: () => {
       // console.log(res);
-      //This runs after the mutation succeeds
-      queryClient.invalidateQueries({ queryKey: ["foodData"] }); // optional: refetch the todos
+
+      queryClient.invalidateQueries({ queryKey: ["foodData"] });
       Swal.fire({
         title: "Deleted!",
         text: "Your Shared Food has been deleted.",

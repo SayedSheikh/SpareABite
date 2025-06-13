@@ -1,12 +1,15 @@
 import React from "react";
 import useAuth from "../../Hooks/useAuth";
 import Loading from "../../Components/Loading/Loading";
-import axios from "axios";
+// import axios from "axios";
 import Swal from "sweetalert2";
 import toast from "react-hot-toast";
+import useSecureAxios from "../../Hooks/useSecureAxios";
 
 const FoodShareForm = () => {
   const { user } = useAuth();
+
+  const secureAxios = useSecureAxios();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,8 +18,8 @@ const FoodShareForm = () => {
     const formData = new FormData(form);
     const values = Object.fromEntries(formData.entries());
 
-    axios
-      .post(`http://localhost:3000/food`, values)
+    secureAxios
+      .post(`/food`, values)
       .then((res) => {
         if (res.data.insertedId) {
           form.reset();

@@ -4,17 +4,6 @@ import InfoModal from "../../Shared/infoModal";
 import FullSingleReview from "./FullSingleReview";
 import { useLoaderData } from "react-router";
 
-const reviews = [
-  {
-    userName: "sayed Sheikh",
-    userImg:
-      "https://img.daisyui.com/images/stock/photo-1635805737707-575885ab0820.webp",
-    rating: 4,
-    comment:
-      "Click the button to watch on Jetflix app.Click the button to watch on Jetflix app.Click the button to watch on Jetflix app.Click the button to watch on Jetflix app.Click the button to watch on Jetflix app.Click the button to watch on Jetflix app.Click the button to watch on Jetflix app.Click the button to watch on Jetflix app.Click the button to watch on Jetflix app.",
-  },
-];
-
 const AllReviews = () => {
   const [card, setCard] = useState(null);
 

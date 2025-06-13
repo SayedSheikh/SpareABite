@@ -10,7 +10,7 @@ const Navbar = () => {
   const { theme, setTheme } = use(ThemeContext);
   document.querySelector("html").setAttribute("data-theme", theme);
 
-  const { user, logout } = useAuth();
+  const { user, logout, setToken } = useAuth();
 
   useEffect(() => {
     document.querySelector("html").setAttribute("data-theme", theme);
@@ -30,6 +30,7 @@ const Navbar = () => {
     logout()
       .then(() => {
         toast.success("Logout Successful !!");
+        setToken(null);
       })
       .catch((err) => {
         console.log(err);

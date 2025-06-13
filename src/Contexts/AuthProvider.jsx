@@ -11,11 +11,14 @@ import {
   updateProfile,
 } from "firebase/auth";
 import { auth } from "../Firebase/Firebase.init";
+
 const googleProvider = new GoogleAuthProvider();
 const githubProvider = new GithubAuthProvider();
+
 const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [token, setToken] = useState(null);
 
   const signUp = (email, pass) => {
     setLoading(true);
@@ -33,6 +36,7 @@ const AuthProvider = ({ children }) => {
   };
 
   const githubSignIn = () => {
+    setLoading(true);
     return signInWithPopup(auth, githubProvider);
   };
 
@@ -42,12 +46,26 @@ const AuthProvider = ({ children }) => {
   };
 
   const updateUser = (UpdatedObj) => {
+    setLoading(true);
     return updateProfile(auth.currentUser, UpdatedObj);
   };
 
-  console.log(user);
+  console.log(token);
+
   useEffect(() => {
-    const unSubscribe = onAuthStateChanged(auth, (currentUser) => {
+    const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
+      let newToken = null;
+      if (currentUser) {
+        try {
+          newToken = await currentUser.getIdToken(true);
+          setToken(newToken);
+        } catch (err) {
+          console.log(err);
+        }
+      } else {
+        setToken(null);
+      }
+
       setUser(currentUser);
       setLoading(false);
     });
@@ -56,6 +74,8 @@ const AuthProvider = ({ children }) => {
   }, []);
   const userInfo = {
     user,
+    token,
+    setToken,
     loading,
     signUp,
     logIn,

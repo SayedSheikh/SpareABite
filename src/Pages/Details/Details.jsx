@@ -1,10 +1,12 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import RequestModal from "../../Shared/RequestModal";
 import RequestConfirmation from "../../Shared/RequestConfirmation";
-import { Link, useLoaderData } from "react-router";
+import { Link, useParams } from "react-router";
 import { format } from "date-fns";
 import useAuth from "../../Hooks/useAuth";
 import toast from "react-hot-toast";
+import useSecureAxios from "../../Hooks/useSecureAxios";
+import Loading2 from "../../Components/Loading/Loading2";
 
 // const food = {
 //   _id: 123444,
@@ -23,9 +25,32 @@ import toast from "react-hot-toast";
 
 const Details = () => {
   const { user } = useAuth();
-  const { data: food } = useLoaderData();
+  const { id } = useParams();
 
-  if (food.length === 0) {
+  const secureAxios = useSecureAxios();
+
+  const [food, setFood] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    setLoading(true);
+    secureAxios
+      .get(`http://localhost:3000/food/${id}`)
+      .then((res) => {
+        setLoading(false);
+        return setFood(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+        setLoading(false);
+      });
+  }, [id, secureAxios, user]);
+
+  if (loading) {
+    return <Loading2></Loading2>;
+  }
+
+  if (food.length === 0 && user) {
     return (
       <div className="max-w-[1400px] mx-auto py-16 w-11/12">
         <title>SpareABite | Details</title>

@@ -30,7 +30,7 @@ const FoodCarousel = () => {
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentImage((prev) => (prev + 1) % foodImages.length);
-    }, 4000);
+    }, 2500);
 
     return () => clearInterval(interval);
   }, []);

@@ -1,10 +1,12 @@
 import React from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
-import axios from "axios";
+import useSecureAxios from "../Hooks/useSecureAxios";
 
 const EditForm = ({ food }) => {
   // const { user } = useAuth();
+
+  const secureAxios = useSecureAxios();
 
   const queryClient = useQueryClient();
 
@@ -15,11 +17,7 @@ const EditForm = ({ food }) => {
     //   .catch((err) => console.log(err));
 
     try {
-      const result = await axios.post(
-        `http://localhost:3000/food/${food._id}`,
-
-        values
-      );
+      const result = await secureAxios.post(`/food/${food._id}`, values);
       return result.data;
     } catch (err) {
       console.log(err);
