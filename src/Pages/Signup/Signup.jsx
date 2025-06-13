@@ -8,9 +8,11 @@ import useAuth from "../../Hooks/useAuth";
 const Signup = () => {
   const { updateUser, signUp, googleSignIn, githubSignIn } = useAuth();
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     setError("");
     const form = e.target;
     const formData = new FormData(form);
@@ -40,12 +42,19 @@ const Signup = () => {
       .then(() => {
         updateUser(updatedObj)
           .then(() => {
+            setLoading(false);
             toast.success("SignUp Successful !!");
             navigate("/");
           })
-          .catch((err) => toast.error(err.code));
+          .catch((err) => {
+            setLoading(false);
+            toast.error(err.code);
+          });
       })
-      .catch((err) => toast.error(err.code));
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err.code);
+      });
 
     // console.log(values);
   };
@@ -112,9 +121,20 @@ const Signup = () => {
               {/* <div>
                 <a className="link link-hover">Forgot password?</a>
               </div> */}
-              <button type="submit" className="btn btn-info mt-4">
+              {/* <button type="submit" className="btn btn-info mt-4">
                 SignUp
-              </button>
+              </button> */}
+
+              {loading ? (
+                <button className="btn btn-info mt-4">
+                  <span className="loading loading-spinner"></span>
+                  loading
+                </button>
+              ) : (
+                <button type="submit" className="btn btn-info mt-4">
+                  SignUp
+                </button>
+              )}
 
               <div className="text-base">
                 Already have an account?{" "}

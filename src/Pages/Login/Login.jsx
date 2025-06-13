@@ -9,6 +9,7 @@ const Login = () => {
   const { logIn, googleSignIn, githubSignIn } = useAuth();
   const [error, setError] = useState("");
   const [emailPass, setEmailPass] = useState(false);
+  const [loading, setLoading] = useState(false);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -24,6 +25,7 @@ const Login = () => {
   const handleGoogle = () => {
     googleSignIn()
       .then(() => {
+        setLoading(false);
         toast.success("LogIn Successful!!");
         navigate(from);
       })
@@ -35,21 +37,28 @@ const Login = () => {
         toast.success("LogIn Successful!!");
         navigate(from);
       })
-      .catch((err) => toast.error(err.code));
+      .catch((err) => {
+        toast.error(err.code);
+      });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setLoading(true);
     setError("");
     const email = e.target.email.value;
     const password = e.target.password.value;
 
     logIn(email, password)
       .then(() => {
+        setLoading(false);
         toast.success("LogIn Successful!!");
         navigate(from);
       })
-      .catch((err) => toast.error(err.code));
+      .catch((err) => {
+        setLoading(false);
+        toast.error(err.code);
+      });
   };
   return (
     <div>
@@ -83,9 +92,17 @@ const Login = () => {
               <div>
                 <a className="link link-hover">Forgot password?</a>
               </div>
-              <button type="submit" className="btn btn-info mt-4">
-                Login
-              </button>
+
+              {loading ? (
+                <button className="btn btn-info mt-4">
+                  <span className="loading loading-spinner"></span>
+                  loading
+                </button>
+              ) : (
+                <button type="submit" className="btn btn-info mt-4">
+                  Login
+                </button>
+              )}
               {error && <p className="text-red-400">{error}</p>}
               <div className="text-base">
                 Don't have an account?{" "}
