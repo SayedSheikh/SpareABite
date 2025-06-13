@@ -50,8 +50,6 @@ const AuthProvider = ({ children }) => {
     return updateProfile(auth.currentUser, UpdatedObj);
   };
 
-  console.log(token);
-
   useEffect(() => {
     const unSubscribe = onAuthStateChanged(auth, async (currentUser) => {
       let newToken = null;
