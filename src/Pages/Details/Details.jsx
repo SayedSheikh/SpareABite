@@ -35,7 +35,7 @@ const Details = () => {
   useEffect(() => {
     setLoading(true);
     secureAxios
-      .get(`http://localhost:3000/food/${id}`)
+      .get(`https://spare-a-bite-server.vercel.app/food/${id}`)
       .then((res) => {
         setLoading(false);
         return setFood(res.data);

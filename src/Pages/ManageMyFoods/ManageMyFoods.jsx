@@ -38,7 +38,7 @@ const ManageMyFoods = () => {
   // const manageFoodApi = async () => {
   //   try {
   //     const res = await axios.get(
-  //       `http://localhost:3000/myManagedFoods?email=${user?.email}`
+  //       `https://spare-a-bite-server.vercel.app/myManagedFoods?email=${user?.email}`
   //     );
 
   //     return res.data;
@@ -63,7 +63,7 @@ const ManageMyFoods = () => {
   // useEffect(() => {
   //   setLoading(true);
   //   axios
-  //     .get(`http://localhost:3000/myManagedFoods?email=${user?.email}`)
+  //     .get(`https://spare-a-bite-server.vercel.app/myManagedFoods?email=${user?.email}`)
   //     .then(({ data }) => {
   //       setMySharedFoods(data);
 

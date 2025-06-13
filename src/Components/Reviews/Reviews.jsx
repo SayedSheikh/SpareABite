@@ -22,7 +22,9 @@ const Reviews = () => {
 
   const getReviews = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/reviews");
+      const res = await axios.get(
+        "https://spare-a-bite-server.vercel.app/reviews"
+      );
 
       return res.data;
     } catch (err) {

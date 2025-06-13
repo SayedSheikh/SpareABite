@@ -12,7 +12,7 @@ const EditForm = ({ food }) => {
 
   const mutationFn = async ({ values }) => {
     // return axios
-    //   .post(`http://localhost:3000/food/${food._id}`, { vlaues })
+    //   .post(`https://spare-a-bite-server.vercel.app/food/${food._id}`, { vlaues })
     //   .then((data) => data.data)
     //   .catch((err) => console.log(err));
 

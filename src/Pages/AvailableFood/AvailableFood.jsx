@@ -19,7 +19,7 @@ const AvailableFood = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:3000/foods`)
+      .get(`https://spare-a-bite-server.vercel.app/foods`)
       .then((data) => {
         setData(data.data);
         setLoading(false);
@@ -38,7 +38,7 @@ const AvailableFood = () => {
     setNoValue(searchData.search);
     axios
       .get(
-        `http://localhost:3000/foods?search=${searchData.search}&sort=${defaultSort}`
+        `https://spare-a-bite-server.vercel.app/foods?search=${searchData.search}&sort=${defaultSort}`
       )
       .then((food) => {
         setData(food.data);

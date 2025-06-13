@@ -4,7 +4,7 @@ import toast from "react-hot-toast";
 export const getReqFoods = async (email) => {
   try {
     const res = await axios.get(
-      `http://localhost:3000/foodRequests?email=${email}`
+      `https://spare-a-bite-server.vercel.app/foodRequests?email=${email}`
     );
     return res.data;
   } catch (err) {

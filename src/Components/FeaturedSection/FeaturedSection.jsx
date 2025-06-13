@@ -11,7 +11,9 @@ const FeaturedSection = () => {
 
   const featuredFn = async () => {
     try {
-      const res = await axios.get("http://localhost:3000/featuredFoods");
+      const res = await axios.get(
+        "https://spare-a-bite-server.vercel.app/featuredFoods"
+      );
 
       return res.data;
     } catch (err) {

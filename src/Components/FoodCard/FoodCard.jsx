@@ -38,7 +38,7 @@ const FoodCard = ({ food, myfood, onOpenModal, openInfoModal }) => {
 
   // const deleteFn = () => {
   //   return axios
-  //     .delete(`http://localhost:3000/food/${food._id}`)
+  //     .delete(`https://spare-a-bite-server.vercel.app/food/${food._id}`)
   //     .then((res) => console.log(res))
   //     .catch((err) => console.log(err));
   // };

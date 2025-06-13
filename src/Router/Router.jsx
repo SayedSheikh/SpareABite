@@ -68,7 +68,8 @@ export const router = createBrowserRouter([
       },
       {
         path: "/allReviews",
-        loader: () => axios.get("http://localhost:3000/reviews"),
+        loader: () =>
+          axios.get("https://spare-a-bite-server.vercel.app/reviews"),
         element: <AllReviews />,
         hydrateFallbackElement: <Loading2></Loading2>,
       },

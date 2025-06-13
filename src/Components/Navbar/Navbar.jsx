@@ -136,17 +136,9 @@ const Navbar = () => {
 
           <Link className="text-xl pl-0 max-w-[150px] h-[50px] cursor-pointer flex items-center">
             {theme === "light" ? (
-              <img
-                className="w-full "
-                src="/public/light-mode-logo.png"
-                alt="logo"
-              />
+              <img className="w-full " src="/light-mode-logo.png" alt="logo" />
             ) : (
-              <img
-                className="w-full "
-                src="/public/darkmode-logo.png"
-                alt="logo"
-              />
+              <img className="w-full " src="/darkmode-logo.png" alt="logo" />
             )}
           </Link>
         </div>

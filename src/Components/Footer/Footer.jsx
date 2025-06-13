@@ -84,6 +84,9 @@ const Footer = () => {
         </div>
 
         <div className="md:self-end">
+          <div>
+            <img className="w-20" src="/updated-logo-1.png" alt="" />
+          </div>
           <h2 className="text-lg font-semibold mb-3 ">Follow Us</h2>
           <div className="flex gap-4">
             <a
