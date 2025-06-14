@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import useSecureAxios from "../Hooks/useSecureAxios";
@@ -6,6 +6,7 @@ import useSecureAxios from "../Hooks/useSecureAxios";
 const EditForm = ({ food }) => {
   // const { user } = useAuth();
 
+  const [loading, setLoading] = useState(false);
   const secureAxios = useSecureAxios();
 
   const queryClient = useQueryClient();
@@ -40,6 +41,7 @@ const EditForm = ({ food }) => {
     mutationFn: mutationFn,
     onSuccess: (res) => {
       document.getElementById("my_modal_3").close();
+      setLoading(false);
       queryClient.invalidateQueries({ queryKey: ["foodData"] }); // optional: refetch the todos
       if (res.modifiedCount) {
         Swal.fire({
@@ -64,6 +66,7 @@ const EditForm = ({ food }) => {
   const handleSubmit = (e) => {
     e.preventDefault();
 
+    setLoading(true);
     const form = e.target;
     const formData = new FormData(form);
 
@@ -197,9 +200,20 @@ const EditForm = ({ food }) => {
       </div>
 
       {/* Submit Button */}
-      <button type="submit" className="btn btn-info w-full mt-2">
+      {/* <button type="submit" className="btn btn-info w-full mt-2">
         Edit
-      </button>
+      </button> */}
+
+      {loading ? (
+        <button className="btn btn-info w-full mt-2">
+          <span className="loading loading-spinner"></span>
+          loading
+        </button>
+      ) : (
+        <button type="submit" className="btn btn-info w-full mt-2">
+          Edit
+        </button>
+      )}
     </form>
   );
 };
