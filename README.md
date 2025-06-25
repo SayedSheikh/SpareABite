@@ -1,38 +1,83 @@
-# 🍽️Spare A Bite
+# 🍽️ Spare A Bite
 
-**Live Site:** [https://spare-a-bite.web.app](https://spare-a-bite.web.app)
+## 🚀 Purpose
 
-## 📝 Description
+Spare A Bite is a community-driven food-sharing platform designed to reduce food waste by connecting donors and recipients. Built with React and Firebase, it offers a seamless way to share surplus food while providing a modern, responsive user experience.
 
-**Spare A Bite** is a community-driven food-sharing platform designed to reduce food waste by connecting donors and recipients. Authenticated users can share surplus food, request available food, manage their food contributions, and view feedback and reviews. Built with a responsive and modern UI using Tailwind CSS and DaisyUI, the platform ensures a smooth user experience across all devices.
+## 🌐 Live URL
 
----
+🔗 [Spare A Bite - Live Demo](https://spare-a-bite.web.app)
 
-## ✨ Features
+## ✨ Key Features
 
-- 🔐 **Authentication System** – Login/signup with Firebase Auth
-- 📦 **Food Sharing** – Add, edit, and manage food items
-- 🔍 **Food Browsing** – View all available food with detailed info
-- 📥 **Request Food** – Authenticated users can request food
-- 💬 **User Reviews** – View all submitted feedback from users
-- 🧑‍🍳 **Donor Info** – See who shared each food item
-- 🔐 **Protected Routes** – Access controls using a `PrivateRoute` component
-- 🔄 **API Integration** – All data is fetched securely using Axios with bearer token handling
-- 🎉 **Nice UI/UX** – Built using TailwindCSS, DaisyUI, Lottie animations, and SweetAlert2
+- **Authentication System**: Secure login/signup with Firebase Auth
+- **Food Sharing**: Add, edit, and manage food items
+- **Food Browsing**: View all available food with detailed info
+- **Request Food**: Authenticated users can request available food
+- **User Reviews**: View all submitted feedback from users
+- **Donor Info**: See who shared each food item
+- **Protected Routes**: Access controls using PrivateRoute component
+- **Modern UI/UX**: Built with TailwindCSS, DaisyUI, and animations
 
----
+## 📦 npm Packages Used
 
-## 🚀 Technologies Used
+- [`react`](https://www.npmjs.com/package/react)
+- [`react-router-dom`](https://www.npmjs.com/package/react-router-dom)
+- [`firebase`](https://www.npmjs.com/package/firebase)
+- [`axios`](https://www.npmjs.com/package/axios)
+- [`@tanstack/react-query`](https://www.npmjs.com/package/@tanstack/react-query)
+- [`tailwindcss`](https://www.npmjs.com/package/tailwindcss)
+- [`daisyui`](https://www.npmjs.com/package/daisyui)
+- [`framer-motion`](https://www.npmjs.com/package/framer-motion)
+- [`sweetalert2`](https://www.npmjs.com/package/sweetalert2)
+- [`react-hot-toast`](https://www.npmjs.com/package/react-hot-toast)
+- [`date-fns`](https://www.npmjs.com/package/date-fns)
+- [`lottie-react`](https://www.npmjs.com/package/lottie-react)
+- [`react-fast-marquee`](https://www.npmjs.com/package/react-fast-marquee)
 
-- **React 19** – Frontend framework
-- **React Router v7** – Routing and navigation
-- **Firebase** – Auth and hosting
-- **Axios** – HTTP requests with interceptors
-- **React Query** – Data fetching and caching
-- **Tailwind CSS + DaisyUI** – Styling and UI components
-- **Framer Motion** – Smooth animations & transitions
-- **SweetAlert2** – Elegant modals
-- **React Hot Toast** – Notifications
-- **Date-fns** – Date formatting
-- **Lottie-react** – Animations
-- **React Fast Marquee** – Scrolling text effects
+## 🛠️ How to Run Locally
+
+Follow these steps to run **Spare A Bite** on your local machine:
+
+### Step 1: Clone the Repository
+
+```bash
+git clone https://github.com/your-username/spare-a-bite.git
+cd spare-a-bite
+```
+
+### Step 2: Install Dependencies
+
+```bash
+npm install
+# or
+yarn install
+```
+
+### Step 3: Set Up Firebase Configuration
+
+1. Create a Firebase project at [Firebase Console](https://console.firebase.google.com/)
+2. Enable Email/Password Authentication
+3. Replace the Firebase config in `src/firebase/firebase.config.js` with your own:
+
+```javascript
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+```
+
+### Step 4: Run the Development Server
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+The app will be available at [http://localhost:3000](http://localhost:3000)
+```
