@@ -69,7 +69,7 @@ const Reviews = () => {
           <ReviewCard key={item._id} review={item} />
         ))}
       </Marquee>
-      <Marquee pauseOnHover className="h-[140px]">
+      <Marquee pauseOnHover className="h-[140px]" direction="right">
         {data?.slice(data?.length / 2, data?.length).map((item) => (
           <ReviewCard key={item._id} review={item} />
         ))}

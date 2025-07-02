@@ -1,8 +1,10 @@
 import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
 import { NavLink } from "react-router";
+import useAuth from "../../Hooks/useAuth";
 
 const Footer = () => {
+  const { user } = useAuth();
   const links = (
     <>
       <li>
@@ -29,37 +31,52 @@ const Footer = () => {
       </li>
       <li>
         <NavLink
-          to="/addFood"
+          to="/about"
           className={({ isActive }) =>
             `hover:text-secondary transition ${
               isActive ? "text-secondary" : ""
             }`
           }>
-          Add Food
+          AboutUs
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/manageFood"
-          className={({ isActive }) =>
-            `hover:text-secondary transition ${
-              isActive ? "text-secondary" : ""
-            }`
-          }>
-          Manage My Foods
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/foodRequest"
-          className={({ isActive }) =>
-            `hover:text-secondary transition ${
-              isActive ? "text-secondary" : ""
-            }`
-          }>
-          My Requested Foods
-        </NavLink>
-      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink
+              to="/addFood"
+              className={({ isActive }) =>
+                `hover:text-secondary transition ${
+                  isActive ? "text-secondary" : ""
+                }`
+              }>
+              Add Food
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/manageFood"
+              className={({ isActive }) =>
+                `hover:text-secondary transition ${
+                  isActive ? "text-secondary" : ""
+                }`
+              }>
+              Manage My Foods
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/foodRequest"
+              className={({ isActive }) =>
+                `hover:text-secondary transition ${
+                  isActive ? "text-secondary" : ""
+                }`
+              }>
+              My Requested Foods
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 

@@ -63,37 +63,52 @@ const Navbar = () => {
       </li>
       <li>
         <NavLink
-          to="/addFood"
+          to="/about"
           className={({ isActive }) =>
             `${
               isActive && "border-b-2 border-b-secondary"
             } rounded-none  px-2 mx-1 pb-0`
           }>
-          Add Food
+          AboutUs
         </NavLink>
       </li>
-      <li>
-        <NavLink
-          to="/manageFood"
-          className={({ isActive }) =>
-            `${
-              isActive && "border-b-2 border-b-secondary"
-            } rounded-none px-2 mx-1 pb-0`
-          }>
-          Manage My Foods
-        </NavLink>
-      </li>
-      <li>
-        <NavLink
-          to="/foodRequest"
-          className={({ isActive }) =>
-            `${
-              isActive && "border-b-2 border-b-secondary"
-            } rounded-none  px-2 mx-1 pb-0`
-          }>
-          My Requested Foods
-        </NavLink>
-      </li>
+      {user && (
+        <>
+          <li>
+            <NavLink
+              to="/addFood"
+              className={({ isActive }) =>
+                `${
+                  isActive && "border-b-2 border-b-secondary"
+                } rounded-none  px-2 mx-1 pb-0`
+              }>
+              Add Food
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/manageFood"
+              className={({ isActive }) =>
+                `${
+                  isActive && "border-b-2 border-b-secondary"
+                } rounded-none px-2 mx-1 pb-0`
+              }>
+              Manage My Foods
+            </NavLink>
+          </li>
+          <li>
+            <NavLink
+              to="/foodRequest"
+              className={({ isActive }) =>
+                `${
+                  isActive && "border-b-2 border-b-secondary"
+                } rounded-none  px-2 mx-1 pb-0`
+              }>
+              My Requested Foods
+            </NavLink>
+          </li>
+        </>
+      )}
     </>
   );
 

@@ -13,6 +13,7 @@ import ManageMyFoods from "../Pages/ManageMyFoods/ManageMyFoods";
 import MyFoodRequests from "../Pages/MyFoodRequests/MyFoodRequests";
 import ErrorPage from "../Pages/ErrorPage/ErrorPage";
 import AllReviews from "../Pages/AllReviews/AllReviews";
+import AboutUs from "../Pages/AboutUs/AboutUs";
 // import useFoodDetailsApi from "../Apis/useFoodDetailsApi";
 
 // const axiosSecure = useSecureAxios();
@@ -80,6 +81,10 @@ export const router = createBrowserRouter([
       {
         path: "/signup",
         Component: Signup,
+      },
+      {
+        path: "/about",
+        Component: AboutUs,
       },
     ],
   },
