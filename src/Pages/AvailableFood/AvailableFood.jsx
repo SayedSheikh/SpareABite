@@ -1,38 +1,39 @@
 import React, { useEffect, useState } from "react";
 import FoodCard from "./../../Components/FoodCard/FoodCard";
+import FoodCardList from "./../../Components/FoodCardList/FoodCardList"; // Import list view
 import axios from "axios";
 import Skeleton from "../../Components/Skeleton/Skeleton";
 
 const AvailableFood = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
-  const [noValue, setNoValue] = useState(""); // to set the property if no data matches.
-  // if consider searchData.search then it will update the currently giving no data searched food
-
-  const [toggle, setToggle] = useState(true);
+  const [noValue, setNoValue] = useState("");
+  const [toggle, setToggle] = useState(true); // true = card view, false = list view
 
   const [searchData, setSearchData] = useState({
     search: "",
     sort: "Expire",
   });
 
+  // Fetch all foods on load
   useEffect(() => {
     setLoading(true);
     axios
       .get(`https://spare-a-bite-server.vercel.app/foods`)
-      .then((data) => {
-        setData(data.data);
+      .then((res) => {
+        setData(res.data);
         setLoading(false);
       })
       .catch((err) => console.log(err));
   }, []);
 
+  // Handle search input changes
   const handleData = (e) => {
     const { name, value } = e.target;
-
     setSearchData({ ...searchData, [name]: value });
   };
 
+  // Search API request
   const handleSearch = (defaultSort = searchData.sort) => {
     setLoading(true);
     setNoValue(searchData.search);
@@ -46,17 +47,22 @@ const AvailableFood = () => {
       })
       .catch((err) => console.log(err));
   };
+
   return (
     <div className="bg-base-200 pt-10 min-h-screen">
       <title>SpareABite | AvailableFoods</title>
-      <div className="hero  font-inter">
+
+      {/* Header */}
+      <div className="hero font-inter">
         <div className="hero-content text-center">
           <div className="max-w-[700px]">
-            <h1 className="text-5xl font-bold">All Availabe Foods</h1>
+            <h1 className="text-5xl font-bold">All Available Foods</h1>
             <p className="py-4 font-space">
               Explore all the available meals ready to be shared. Find something
               tasty and help reduce food waste at the same time.
             </p>
+
+            {/* Search + Sort */}
             <div className="flex sm:flex-row flex-col gap-1 w-[80%] mx-auto items-center">
               {/* Search Input */}
               <label className="input focus-within:outline-0 flex-1 flex items-center gap-2 w-full sm:w-fit">
@@ -78,7 +84,7 @@ const AvailableFood = () => {
                   type="search"
                   required
                   placeholder="Search"
-                  className="focus:outline-0 flex-1 h-10 "
+                  className="focus:outline-0 flex-1 h-10"
                   name="search"
                   value={searchData.search}
                   onChange={handleData}
@@ -90,8 +96,8 @@ const AvailableFood = () => {
                 />
               </label>
 
-              <div className="flex gap-1 w-full sm:w-fit ">
-                {/* Sort Dropdown */}
+              {/* Sort + Search Button */}
+              <div className="flex gap-1 w-full sm:w-fit">
                 <select
                   value={searchData.sort}
                   onChange={(e) => {
@@ -101,11 +107,10 @@ const AvailableFood = () => {
                   name="sort"
                   className="select select-bordered max-w-[100px] flex-1 sm:flex-none focus-within:outline-0 cursor-pointer">
                   <option disabled>Expire</option>
-                  <option className="cursor-pointer">Asc</option>
-                  <option className="cursor-pointer">Desc</option>
+                  <option>Asc</option>
+                  <option>Desc</option>
                 </select>
 
-                {/* Search Button */}
                 <button
                   onClick={() => handleSearch()}
                   className="btn btn-info flex-1 sm:flex-none">
@@ -117,30 +122,49 @@ const AvailableFood = () => {
         </div>
       </div>
 
-      <div className="relative max-w-[1000px] mx-auto py-20 w-11/12">
+      {/* Foods Section */}
+      <div className="relative max-w-[1400px] mx-auto py-20 w-11/12">
+        {/* Change layout button */}
         <div className="justify-end mb-5 sticky top-16 z-10 py-2 px-1 hidden md:flex">
           <button
             onClick={() => setToggle((prev) => !prev)}
-            className=" btn btn-sm sm:btn-md btn-accent shadow-md hover:shadow-lg transition-all duration-300">
+            className="btn btn-sm sm:btn-md btn-accent shadow-md hover:shadow-lg transition-all duration-300">
             Change layout
           </button>
         </div>
-        <div
-          className={`grid grid-cols-1 sm:grid-cols-2 gap-5 ${
-            toggle ? "md:grid-cols-3" : "md:grid-cols-2"
-          }`}>
-          {loading
-            ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
-            : data.map((item) => <FoodCard key={item._id} food={item} />)}
-          {data.length === 0 && noValue && (
-            <p className="sm:col-span-2 md:col-span-3 lg:col-span-4">
-              No food available with name{" "}
-              <span className="text-primary font-normal text-[18px]">
-                {noValue}
-              </span>
-            </p>
-          )}
-        </div>
+
+        {/* Conditional rendering based on toggle */}
+        {toggle ? (
+          // Card View
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5">
+            {loading
+              ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
+              : data.map((item) => <FoodCard key={item._id} food={item} />)}
+            {data.length === 0 && noValue && (
+              <p className="sm:col-span-2 md:col-span-3 lg:col-span-4">
+                No food available with name{" "}
+                <span className="text-primary font-normal text-[18px]">
+                  {noValue}
+                </span>
+              </p>
+            )}
+          </div>
+        ) : (
+          // List View
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+            {loading
+              ? Array.from({ length: 4 }).map((_, i) => <Skeleton key={i} />)
+              : data.map((item) => <FoodCardList key={item._id} food={item} />)}
+            {data.length === 0 && noValue && (
+              <p className="text-center">
+                No food available with name{" "}
+                <span className="text-primary font-normal text-[18px]">
+                  {noValue}
+                </span>
+              </p>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
