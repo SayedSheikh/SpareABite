@@ -8,13 +8,13 @@ const AboutUs = () => {
       style={{
         backgroundImage: "url('')", // Food sharing concept
       }}>
-      <div className="absolute inset-0  bg-opacity-60 z-0" />
+      {/* <div className="absolute inset-0  bg-opacity-60 z-0" /> */}
 
       <motion.div
         initial={{ opacity: 0, y: 40 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="relative z-10 max-w-4xl mx-auto bg-white bg-opacity-90 backdrop-blur-md rounded-2xl shadow-lg p-10 text-gray-900">
+        className="relative z-10 max-w-4xl mx-auto bg-base-100 bg-opacity-90 backdrop-blur-md rounded-xl shadow-lg p-10 border-1 border-primary/20">
         <h2 className="text-4xl font-bold mb-6 text-center text-primary">
           About Us
         </h2>

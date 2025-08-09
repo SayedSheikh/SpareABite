@@ -128,7 +128,7 @@ const AvailableFood = () => {
         <div className="justify-end mb-5 sticky top-16 z-10 py-2 px-1 hidden md:flex">
           <button
             onClick={() => setToggle((prev) => !prev)}
-            className="btn btn-sm sm:btn-md btn-accent shadow-md hover:shadow-lg transition-all duration-300">
+            className="btn btn-sm sm:btn-md btn-outline btn-secondary shadow-md hover:shadow-lg transition-all duration-300">
             Change layout
           </button>
         </div>
