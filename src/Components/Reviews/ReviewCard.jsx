@@ -11,7 +11,9 @@ const ReviewCard = ({ review }) => {
       <div className="h-full p-5 border border-primary/20 border-l-0 rounded-r shadow-sm">
         <h6 className="mb-2 font-semibold leading-5">{userName}</h6>
         <div className="flex gap-1 items-center">
-          <p>Rating :</p>
+          <p>
+            <strong>Rating :</strong>
+          </p>
           <div className="flex gap-1">
             {Array.from({ length: 5 }).map((_, i) => {
               return (
@@ -25,7 +27,7 @@ const ReviewCard = ({ review }) => {
             })}
           </div>
         </div>
-        <p className="text-sm text-gray-500 overflow-hidden whitespace-nowrap text-ellipsis ">
+        <p className="text-sm overflow-hidden whitespace-nowrap text-ellipsis ">
           {comment}
         </p>
       </div>
