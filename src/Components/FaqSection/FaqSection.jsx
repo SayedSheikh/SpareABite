@@ -31,7 +31,7 @@ const faqs = [
 const FaqSection = () => {
   return (
     <div className="max-w-[1400px] mx-auto w-11/12 mb-[70px]">
-      <h1 className="text-3xl text-center font-bold font-inter">
+      <h1 className="text-primary text-3xl text-center font-bold font-inter">
         Frequently Asked <span className="text-primary">Questions</span>
       </h1>
 
