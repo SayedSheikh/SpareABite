@@ -1,10 +1,11 @@
 import React from "react";
 import { FaFacebook, FaInstagram, FaLinkedin, FaYoutube } from "react-icons/fa";
-import { NavLink } from "react-router";
+import { NavLink, useNavigate } from "react-router";
 import useAuth from "../../Hooks/useAuth";
 
 const Footer = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
   const links = (
     <>
       <li>
@@ -83,9 +84,10 @@ const Footer = () => {
   return (
     <footer className="bg-black text-white pt-16 pb-8 border-t border-gray-800 font-inter">
       <div className="max-w-[1400px] mx-auto px-4 flex flex-col md:flex-row md:justify-around justify-between items-start md:items-center gap-10 w-11/12">
-        <div className="">
+        <div>
           <img
-            className="max-w-[150px] mb-4"
+            onClick={() => navigate("/")}
+            className="max-w-[150px] mb-4 cursor-pointer"
             src="/darkmode-logo.png"
             alt="Logo"
           />
